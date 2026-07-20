@@ -1,0 +1,120 @@
+.slot-chrome {
+  position: relative;
+  overflow: hidden;
+}
+
+.slot-chrome__body {
+  position: relative;
+  z-index: 1;
+}
+
+/*
+ * Hero full-bleed: foto absolute mengacu ke section (bukan body),
+ * supaya background mengisi tinggi hero dengan benar.
+ */
+.eg-hero.slot-chrome > .slot-chrome__body,
+.bf-hero.slot-chrome > .slot-chrome__body {
+  position: static;
+}
+
+.eg-hero.slot-chrome .eg-fade-hero,
+.bf-hero.slot-chrome .bf-fade-hero {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Ornamen bebas — posisi absolute dari pusat section */
+.slot-chrome__free-orn {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  width: min(72%, 300px);
+  display: flex;
+  justify-content: center;
+  transform-origin: center center;
+}
+
+.slot-chrome__orn-motion {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  transform-origin: center center;
+}
+
+.slot-chrome__free-orn img {
+  width: 100%;
+  max-height: 160px;
+  object-fit: contain;
+  display: block;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Zoom in / out pelan — di inner agar tidak bentrok dengan geser/skala admin */
+.slot-chrome__orn--anim-pulse {
+  animation: slotOrnPulse 3.2s ease-in-out infinite;
+}
+
+.slot-chrome__orn--anim-sway {
+  animation: slotOrnSway 4s ease-in-out infinite;
+}
+
+.slot-chrome__orn--anim-float {
+  animation: slotOrnFloat 3.6s ease-in-out infinite;
+}
+
+@keyframes slotOrnPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes slotOrnSway {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(12px);
+  }
+}
+
+@keyframes slotOrnFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot-chrome__orn--anim-pulse,
+  .slot-chrome__orn--anim-sway,
+  .slot-chrome__orn--anim-float {
+    animation: none;
+  }
+}
+
+.photo-frame-slot {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+
+.photo-frame-slot__overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 3;
+  transform-origin: center center;
+}

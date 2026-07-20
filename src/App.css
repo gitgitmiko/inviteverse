@@ -1,0 +1,4 @@
+/* App-level resets only; theme styles live in theme folders */
+#root {
+  min-height: 100vh;
+}

@@ -1,0 +1,43 @@
+/* Mirip AOS Indoinvite (once: false): masuk & keluar viewport ikut animasi */
+.reveal {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  transition-duration: 1200ms;
+  will-change: opacity, transform;
+}
+
+.reveal--fade-up {
+  transform: translate3d(0, 40px, 0);
+}
+.reveal--fade-down {
+  transform: translate3d(0, -40px, 0);
+}
+.reveal--fade-left {
+  transform: translate3d(-40px, 0, 0);
+}
+.reveal--fade-right {
+  transform: translate3d(40px, 0, 0);
+}
+.reveal--zoom-in {
+  transform: scale(0.88);
+}
+.reveal--zoom-in-up {
+  transform: translate3d(0, 36px, 0) scale(0.92);
+}
+.reveal--zoom-in-down {
+  transform: translate3d(0, -28px, 0) scale(0.92);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

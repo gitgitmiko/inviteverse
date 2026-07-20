@@ -1,0 +1,65 @@
+{
+  "id": "blue-flowers",
+  "source": "https://indoinvite.com/s/1952/undangan/114?kpd=Bapak%20Budi&contoh=1",
+  "scrapedAt": "2026-07-21",
+  "note": "Referensi struktur saja. Produk pakai rekreasi + aset sendiri.",
+  "visual": {
+    "cover": "full-screen floral paper bg + offset names (left/right) + circular photo with floral ring + bottom flower cluster + pill CTA",
+    "cta": "Buka Undangan",
+    "afterOpen": {
+      "hero": "Splide fade gallery (~6s) + overlay names + countdown + bottom flowers",
+      "intro": "salam + intro copy + verse",
+      "groomRow": "teks 50% kiri + foto circle 50% kanan + floral border ring",
+      "ampersand": "giant & centered (#005189 stroke)",
+      "brideRow": "teks 50% (end) + foto circle 50% + floral border ring",
+      "nameBand": "offset Justin / & Sisca + circular cover photo + Border2 ring",
+      "events": "alternating text-align start/end + floral icon divider"
+    },
+    "palette": ["#005189", "#2276b1", "#359bb7", "#ffffff", "#ececec", "#1e1e1e"],
+    "fonts": ["Great Vibes", "Engagement", "Poppins"],
+    "animationsScraped": [
+      "AOS.init({ duration: 3000 }) once=false",
+      "aos: fade-up, zoom-in, fade-left, fade-right, zoom-in-up, fade-down",
+      "splide fade hero interval 6000ms"
+    ],
+    "aos": {
+      "init": { "duration": 3000 },
+      "once": false,
+      "common": ["fade-up", "zoom-in", "fade-left", "fade-right", "zoom-in-up", "fade-down"]
+    },
+    "ornamentSlotsForAdmin": [
+      "cover-background (ex BFL-Background.webp)",
+      "cover-bottom (ex BFL-Bawah.webp)",
+      "section-top (ex BFL-ATS.webp / BFL-BGA.webp)",
+      "section-bottom (ex BFL-BWH.webp / BFL-BGB.webp)",
+      "photo-ring (ex BFL-Border.webp)",
+      "photo-ring-lg (ex BFL-Border2.png)",
+      "event-divider (ex BFL-Icon.png)"
+    ],
+    "sourceAssetsNotUsedInProduct": [
+      "flowers-template/blue-flowers/BFL-Background.webp",
+      "flowers-template/blue-flowers/BFL-BGA.webp",
+      "flowers-template/blue-flowers/BFL-BGB.webp",
+      "flowers-template/blue-flowers/BFL-BWH.webp",
+      "flowers-template/blue-flowers/BFL-ATS.webp",
+      "flowers-template/blue-flowers/BFL-Bawah.webp",
+      "flowers-template/blue-flowers/BFL-Border.webp",
+      "flowers-template/blue-flowers/BFL-Border2.png",
+      "flowers-template/blue-flowers/BFL-Icon.png"
+    ]
+  },
+  "sections": [
+    "cover",
+    "hero-countdown",
+    "intro-verse",
+    "couple",
+    "name-band",
+    "events",
+    "story",
+    "timeline",
+    "gift",
+    "rsvp",
+    "gallery",
+    "footer"
+  ]
+}

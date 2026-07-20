@@ -1,0 +1,23 @@
+/* Tombol kembali ke beranda — seragam semua tema */
+.theme-back {
+  position: fixed;
+  top: max(0.75rem, env(safe-area-inset-top));
+  left: max(0.75rem, env(safe-area-inset-left));
+  z-index: 50;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1a1714;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.theme-back:hover {
+  background: #fff;
+}

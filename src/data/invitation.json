@@ -1,0 +1,693 @@
+{
+  "theme": "super-classic",
+  "guestName": "Bapak Budi",
+  "coverTitle": "Happy Wedding",
+  "eventTitle": "The Wedding of Justins & Sisca",
+  "groomNickname": "Justin",
+  "brideNickname": "Sisca",
+  "coverMessage": "Tanpa Mengurangi Rasa Hormat, Kami Mengundang Bapak/Ibu/Saudara/i untuk Hadir di Acara Kami.",
+  "coverPhoto": "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80",
+  "musicUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+  "countdownTarget": "2026-02-18T02:39:00+07:00",
+  "verse": {
+    "arabic": "وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةًۗ اِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ",
+    "translation": "Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir.",
+    "source": "Ar-Rum · Ayat 21"
+  },
+  "salam": "السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ",
+  "intro": "Atas Rahmat Tuhan Yang Maha Esa, kami bermaksud mengundang Anda di acara Kami. Merupakan suatu kehormatan dan kebahagiaan bagi kami sekeluarga, apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu pada",
+  "groom": {
+    "fullName": "Tobias Justin",
+    "parents": "Putra dari Pasangan",
+    "father": "Ayah Justin",
+    "mother": "Ibu Justin",
+    "address": "Beralamat di Jakarta",
+    "instagram": "Jessnolimit",
+    "photo": "/uploads/foto-pria.jpg"
+  },
+  "bride": {
+    "fullName": "Sisca Chol",
+    "parents": "Putri dari Pasangan",
+    "father": "Ayah Sisca",
+    "mother": "Ibu Sisca",
+    "address": "Beralamat di Jakarta",
+    "instagram": "Siscachol",
+    "photo": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80"
+  },
+  "events": [
+    {
+      "title": "Resepsi Pernikahan",
+      "date": "Anggara, 4-5 Maret 2025",
+      "time": "Pukul 00:00 WIB Samai Jauh",
+      "place": "Rumah Justin di Jakarta",
+      "mapsUrl": "https://goo.gl/maps/1h11E7vMr2w8EXXF9"
+    },
+    {
+      "title": "Akad Pernikahan",
+      "date": "Rabu, 18 Februari 2026",
+      "time": "Pukul 02:39 WIB - 08:00 WIB",
+      "place": "Jalan gunung batur, no 78, Denpasar, Bali",
+      "mapsUrl": "https://goo.gl/maps/1h11E7vMr2w8EXXF9"
+    },
+    {
+      "title": "Makan Malam",
+      "date": "Kamis, 15 Mei 2025",
+      "time": "Pukul 21:00 WIB Sampai Larut",
+      "place": "Restoran Makan Padang",
+      "mapsUrl": "https://maps.app.goo.gl/QQux7eNPHPd1dsi59"
+    }
+  ],
+  "liveStreaming": {
+    "note": "Bagi para tamu yang berhalangan hadir karena keterbatasan jarak dan waktu, silahkan mengklik tombol berikut untuk menyaksikan Live Streaming Acara kami via Youtube",
+    "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  "closingHope": "Besar harapan kami jika Bapak/Ibu/Sahabat/Sdr/i berkenan hadir pada acara ini. Atas perhatiannya Terima kasih",
+  "story": {
+    "title": "Our Story",
+    "subtitle": "Momen indah kita berdua",
+    "items": [
+      {
+        "title": "Pertemuan Di Kereta Api",
+        "date": "",
+        "text": "Pertemuan tak terduga di sebuah kereta api membawa Aria dan Ryan dalam sebuah cerita cinta perjalanan yang tak terlupakan. Aria adalah seorang gadis yang bekerja sebagai penulis buku anak-anak, sedangkan Ryan adalah seorang pengusaha muda yang sedang dalam perjalanan bisnis ke kota lain."
+      },
+      {
+        "title": "Lanjut Ke Pelaminan",
+        "date": "05 Januari 2024",
+        "text": "Setelah itu, Ryan dan Aria terus berhubungan dan memulai sebuah hubungan yang manis. Mereka mengunjungi tempat-tempat yang indah dan menikmati setiap momen bersama. Perjalanan pertemuan di kereta api telah membawa mereka pada sebuah cerita cinta perjalanan yang tak terlupakan."
+      }
+    ]
+  },
+  "gallery": [
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80",
+    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&q=80",
+    "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&q=80",
+    "https://images.unsplash.com/photo-1529636798458-92182e662925?w=600&q=80",
+    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&q=80",
+    "https://images.unsplash.com/photo-1460978812857-470ed1c77af0?w=600&q=80"
+  ],
+  "timeline": [
+    {
+      "title": "Persiapan dan Kedatangan Tamu",
+      "desc": "Pengantin dan keluarga bersiap-siap",
+      "start": "08 WIB",
+      "end": "10 WIB"
+    },
+    {
+      "title": "Akad Nikah",
+      "desc": "Pembukaan oleh MC, Pembacaan Ayat Suci Al-Qur'an, Khutbah Nikah oleh penghulu atau tokoh agama, Ijab Kabul, Doa",
+      "start": "10 WIB",
+      "end": "11 WIB"
+    },
+    {
+      "title": "Resepsi Pernikahan",
+      "desc": "Sambutan dari keluarga kedua mempelai, Hiburan (musik, tarian tradisional, atau penampilan lainnya)",
+      "start": "11 WIB",
+      "end": "14.00 WIB Sampai Acara Selesai"
+    },
+    {
+      "title": "Acara Puncak Kami",
+      "desc": "Hiburan dan makan siang",
+      "start": "",
+      "end": ""
+    }
+  ],
+  "protocolNote": "Acara ini di selenggarakan dengan mematuhi protokol pencegahan penyebaran COVID-19 dan bagi tamu undangan di harapkan dapat mengikutinya.",
+  "rsvp": {
+    "guestCountOptions": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "menuOptions": [
+      "Pempek Palembang",
+      "Gudeg",
+      "Sate Madura",
+      "Soto Lamongan",
+      "Ayam Betutu",
+      "Kerak Telor",
+      "Kue Sagu"
+    ]
+  },
+  "gift": {
+    "intro": "Doa restu Bapak/Ibu sekalian merupakan karunia yang sangat berarti bagi kami. Dan jika memberi merupakan ungkapan tanda kasih, Bapak/Ibu dapat memberi kado secara cashless. Terima kasih",
+    "accounts": [
+      {
+        "name": "Sisca Kohl",
+        "number": "12345678",
+        "bank": "BCA"
+      },
+      {
+        "name": "Tobias Justin",
+        "number": "0982309823",
+        "bank": "Mandiri"
+      },
+      {
+        "name": "Papanya Sisca",
+        "number": "99787238",
+        "bank": "BNI"
+      },
+      {
+        "name": "Van",
+        "number": "123456789123",
+        "bank": "BRI"
+      }
+    ]
+  },
+  "thanks": "Terimakasih",
+  "activeTheme": "super-classic",
+  "themeStyles": {
+    "super-classic": {
+      "colors": {
+        "accent": "#7a2f3d",
+        "gold": "#a67c52",
+        "ink": "#2c241c",
+        "muted": "#6b5e52",
+        "bg": "#f7f1e8",
+        "card": "#fffdf9"
+      },
+      "showPetals": true,
+      "ornamentMode": "svg",
+      "cover": {
+        "photoFrame": "",
+        "background": {
+          "mode": "color",
+          "color": "#f7f1e8",
+          "image": ""
+        },
+        "textColors": {
+          "eyebrow": "",
+          "name": "",
+          "guest": "",
+          "buttonBg": "",
+          "buttonText": ""
+        },
+        "corners": {
+          "topLeft": "",
+          "topRight": "",
+          "bottomLeft": "",
+          "bottomRight": ""
+        },
+        "ornaments": []
+      },
+      "sections": {
+        "hero": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "intro": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "couple": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "events": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "story": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "timeline": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "gift": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "rsvp": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "gallery": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "footer": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        }
+      }
+    },
+    "elegan-grey": {
+      "colors": {
+        "accent": "#928573",
+        "gold": "#9e9180",
+        "ink": "#2d2d2d",
+        "muted": "#6a5d4c",
+        "bg": "#ececec",
+        "card": "#ffffff"
+      },
+      "showPetals": false,
+      "ornamentMode": "svg",
+      "cover": {
+        "photoFrame": "",
+        "background": {
+          "mode": "color",
+          "color": "#ececec",
+          "image": ""
+        },
+        "textColors": {
+          "eyebrow": "",
+          "name": "",
+          "guest": "",
+          "buttonBg": "",
+          "buttonText": ""
+        },
+        "corners": {
+          "topLeft": "",
+          "topRight": "",
+          "bottomLeft": "",
+          "bottomRight": ""
+        },
+        "ornaments": []
+      },
+      "sections": {
+        "hero": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "intro": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "couple": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "events": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "story": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "timeline": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "gift": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "rsvp": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "gallery": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "footer": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        }
+      }
+    },
+    "blue-flowers": {
+      "colors": {
+        "accent": "#005189",
+        "gold": "#359bb7",
+        "ink": "#1e1e1e",
+        "muted": "#2276b1",
+        "bg": "#ffffff",
+        "card": "#ffffff"
+      },
+      "showPetals": false,
+      "ornamentMode": "svg",
+      "cover": {
+        "photoFrame": "",
+        "background": {
+          "mode": "color",
+          "color": "#ffffff",
+          "image": ""
+        },
+        "textColors": {
+          "eyebrow": "",
+          "name": "",
+          "guest": "",
+          "buttonBg": "",
+          "buttonText": ""
+        },
+        "corners": {
+          "topLeft": "",
+          "topRight": "",
+          "bottomLeft": "",
+          "bottomRight": ""
+        },
+        "ornaments": []
+      },
+      "sections": {
+        "hero": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "intro": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "couple": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "events": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "story": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "timeline": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "gift": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "rsvp": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "gallery": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        },
+        "footer": {
+          "background": {
+            "mode": "color",
+            "color": "",
+            "image": ""
+          },
+          "textColor": "",
+          "frames": {
+            "cover": "",
+            "groom": "",
+            "bride": ""
+          },
+          "ornaments": []
+        }
+      }
+    }
+  }
+}

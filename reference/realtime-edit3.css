@@ -1,0 +1,121 @@
+.radio-label {
+    background-color: #dcdcdc;
+    padding: 6px 10px;
+    border-radius: 3px;
+    color: #393939;
+    cursor: pointer;
+    margin-right: 5px;
+    border: 1px solid #555555;
+}
+.lu-body {
+    position: relative;
+}
+.lu-scroll {
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+.lu-scroll-box {
+    float: left;
+    margin-bottom: 5px;
+    text-align: left;
+}
+.lu-body label {
+    font-size: 12px !important;
+}
+.arrow-slide {
+    float: right;
+    position:absolute;
+    right: 0px;
+    top: 0px;
+}
+.dropdown-menu {
+    list-style: none !important;
+}
+
+.note-color .note-dropdown-menu {
+    left: 0 !important;
+}
+
+.link-style {
+    color: blue;
+    text-decoration: underline;
+    font-size: 12px;
+}
+
+.link-tutorial {
+    color: blue;
+    text-decoration: underline;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.simpan-notif {
+    padding: 5px;
+    margin-top: 10px;
+    background-color: #bcdaff;
+    border-radius: 5px;
+    transition: opacity 0.7s ease;
+}
+
+.btn-edit-add {
+    padding: 5px 25px;
+    background-color: #4299e1 !important;
+    border-radius: 4px;
+    color: #fff !important;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.btn-edit-update {
+    padding: 5px 25px;
+    background-color: #47c363 !important;
+    border-radius: 4px;
+    color: #fff !important;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.btn-edit-remove {
+    padding: 5px 25px;
+    background-color: #fc544b !important;
+    border-radius: 4px;
+    color: #fff !important;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.btn-edit-sec {
+    padding: 5px 25px;
+    background-color: #e2e2e2 !important;
+    border-radius: 4px;
+    color: #2e2e2e !important;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.row-update-delete {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 5px;
+}
+
+.form-edit {
+    height: 35px !important;
+    font-size: 12px !important;
+    font-weight: 300 !important;
+    margin-bottom: -10px;
+    padding: 5px 8px;
+}
+
+.edit-frame p {
+    font-size: 12px;
+    font-family: 'Golos Text', sans-serif;
+}
+
+.edit-frame label {
+    font-size: 10px;
+    font-family: 'Golos Text', sans-serif;
+    margin-bottom: 0px;
+    line-height: 10px;
+    text-align: left;
+}

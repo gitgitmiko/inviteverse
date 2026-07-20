@@ -1,0 +1,60 @@
+/* Pemutar musik global — semua tema */
+.music-btn {
+  position: fixed;
+  right: max(0.85rem, env(safe-area-inset-right));
+  bottom: max(0.85rem, env(safe-area-inset-bottom));
+  z-index: 40;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent, var(--eg-taupe, var(--bf-blue, #7a2f3d)));
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.music-btn.is-playing {
+  animation: music-btn-pulse 1.4s ease-in-out infinite;
+}
+
+.music-yt {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  left: -9999px;
+}
+
+@keyframes music-btn-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-btn.is-playing {
+    animation: none;
+  }
+}
+
+/* Di dalam frame preview editor: tempel di pojok frame tema */
+.ed__preview [data-theme-frame] {
+  position: relative;
+}
+
+.ed__preview .music-btn {
+  position: absolute;
+  right: 0.65rem;
+  bottom: 0.65rem;
+  z-index: 30;
+}

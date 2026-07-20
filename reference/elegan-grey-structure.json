@@ -1,0 +1,46 @@
+{
+  "id": "elegan-grey",
+  "source": "https://indoinvite.com/s/1952/undangan/79?kpd=Bapak%20Budi&contoh=1",
+  "scrapedAt": "2026-07-21",
+  "note": "Referensi struktur saja. Produk pakai rekreasi + aset sendiri.",
+  "visual": {
+    "cover": "full-bleed + fade 2 foto bergantian + overlay gelap",
+    "cta": "Buka Undangan",
+    "afterOpen": {
+      "hero": "Splide-like fade beberapa foto gallery",
+      "marquee": "slider horizontal 5 foto, animation scroll 40s linear infinite kanan ke kiri",
+      "groomRow": "teks 45% kiri + foto arch 55% kanan",
+      "nameBand": "banner nama Justin & Sisca",
+      "brideRow": "foto arch 55% kiri + teks 45% kanan"
+    },
+    "palette": ["#2D2D2D", "#303333", "#928573", "#9e9180", "#ececec", "#ffffff"],
+    "fonts": ["Playfair Display", "Engagement", "Work Sans"],
+    "animationsScraped": [
+      "splide fade hero (interval ~5s)",
+      "@keyframes scroll translateX(-250px*7) 40s linear infinite",
+      "aos fade-up on sections"
+    ],
+    "ornamentSlotsForAdmin": [
+      "groom-frame (ex EG-Groom.webp)",
+      "bride-frame (ex EG-Bride.webp)",
+      "name-band background"
+    ],
+    "sourceAssetsNotUsedInProduct": [
+      "elegan-grey/EG-Bride.webp",
+      "elegan-grey/EG-Groom.webp",
+      "bee-classic/BFL-BC.jpg"
+    ]
+  },
+  "sections": [
+    "cover",
+    "couple",
+    "save-the-date",
+    "verse",
+    "events",
+    "story",
+    "timeline",
+    "gift",
+    "rsvp",
+    "gallery"
+  ]
+}
