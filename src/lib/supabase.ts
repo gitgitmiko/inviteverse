@@ -22,6 +22,8 @@ export type InvitationRow = {
   active_theme: ThemeId
   content: Record<string, unknown>
   theme_styles: Partial<Record<ThemeId, ThemeVisualStyle>>
+  plan_id?: string
+  plan_paid_at?: string | null
   created_at: string
   updated_at: string
 }

@@ -1,5 +1,9 @@
 import { useState, type ReactNode } from 'react'
-import { resolveImageUpload, toDirectImageUrl } from '../lib/imageUrl'
+import {
+  resolveImageUpload,
+  toDirectImageUrl,
+  type ImageUploadTarget,
+} from '../lib/imageUrl'
 import {
   createOrnament,
   duplicateOrnament,
@@ -28,16 +32,24 @@ export function ImageField({
   onChange,
   hint,
   invitationId,
+  uploadTarget,
 }: {
   label: string
   value: string
   onChange: (url: string) => void
   hint?: string
-  /** Jika ada, upload ke Supabase Storage */
+  /** @deprecated pakai uploadTarget */
   invitationId?: string | null
+  uploadTarget?: ImageUploadTarget | null
 }) {
   const [error, setError] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
+
+  const target: ImageUploadTarget | null =
+    uploadTarget ??
+    (invitationId
+      ? { kind: 'invitation', invitationId }
+      : null)
 
   const onUrlChange = (raw: string) => {
     setError(null)
@@ -49,7 +61,7 @@ export function ImageField({
     setError(null)
     setUploading(true)
     try {
-      const url = await resolveImageUpload(file, invitationId)
+      const url = await resolveImageUpload(file, target)
       onChange(url)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Upload gagal')
@@ -67,7 +79,7 @@ export function ImageField({
         {isDataUrl ? (
           <input
             readOnly
-            value="Gambar lokal (simpan undangan agar tidak hilang)"
+            value="Gambar lokal (simpan agar tidak hilang)"
           />
         ) : (
           <input
@@ -108,10 +120,12 @@ export function ImageField({
       </div>
       <p className="ed-image-field__hint">
         {hint ??
-          (invitationId
-            ? 'Upload disimpan ke cloud Storage (maks 5MB).'
-            : 'Belum punya gambar? Boleh dikosongkan, atau upload PNG transparan.')}
-        {isRemote ? ' URL publik tersimpan di undangan.' : null}
+          (target?.kind === 'theme'
+            ? 'Ornamen template tema — tersimpan di Storage (maks 5MB).'
+            : target
+              ? 'Upload disimpan ke cloud Storage (maks 5MB).'
+              : 'Belum punya gambar? Boleh dikosongkan, atau upload PNG transparan.')}
+        {isRemote ? ' URL publik tersimpan.' : null}
       </p>
       {error && <p className="ed-image-field__error">{error}</p>}
     </div>
@@ -232,10 +246,12 @@ export function OrnamentListEditor({
   ornaments,
   onChange,
   invitationId,
+  uploadTarget,
 }: {
   ornaments: FreeOrnament[]
   onChange: (next: FreeOrnament[]) => void
   invitationId?: string | null
+  uploadTarget?: ImageUploadTarget | null
 }) {
   const list = ornaments ?? []
 
@@ -314,6 +330,7 @@ export function OrnamentListEditor({
               value={item.src}
               onChange={(src) => updateAt(index, { src })}
               invitationId={invitationId}
+              uploadTarget={uploadTarget}
             />
             {item.src ? (
               <>

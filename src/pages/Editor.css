@@ -52,6 +52,9 @@
 
 .ed__top-actions {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
   gap: 0.4rem;
 }
 
@@ -533,4 +536,22 @@
   flex-direction: column;
   gap: 0.4rem;
   padding: 0.35rem 0;
+}
+
+.plan-lock {
+  padding: 0.85rem 1rem;
+  border: 1px dashed #c4a574;
+  border-radius: 8px;
+  background: #faf6ef;
+  color: #5c4a32;
+  font-size: 0.9rem;
+}
+
+.plan-lock p {
+  margin: 0 0 0.55rem;
+}
+
+.plan-lock__cta {
+  color: #2f5d4a;
+  font-weight: 600;
 }

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNod
 import { Link, useSearchParams } from 'react-router-dom'
 import defaultData from '../../data/invitation.json'
 import type { InvitationData } from '../../lib/invitationStore'
+import { resolveGuestNameFromSearch } from '../../lib/guestInvite'
 import { getThemeVisual, slotBackgroundStyle } from '../../lib/themeStyle'
 import type { SectionVisual } from '../../lib/themeTypes'
 import {
@@ -311,7 +312,7 @@ export default function BlueFlowers({
 }: Props) {
   const [params] = useSearchParams()
   const base = dataProp ?? defaultData
-  const guestName = params.get('kpd') || base.guestName
+  const guestName = resolveGuestNameFromSearch(params, base.guestName)
   const [opened, setOpened] = useState(forceOpen)
   const [giftOpen, setGiftOpen] = useState(false)
   const [copied, setCopied] = useState<string | null>(null)
@@ -823,7 +824,7 @@ export default function BlueFlowers({
 
             <MusicPlayer
               src={data.musicUrl}
-              active={isOpen}
+              active={previewMode || isOpen}
               accent={colors.accent}
             />
           </div>

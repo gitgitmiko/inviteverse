@@ -4,6 +4,7 @@ import defaultData from '../../data/invitation.json'
 import {
   type InvitationData,
 } from '../../lib/invitationStore'
+import { resolveGuestNameFromSearch } from '../../lib/guestInvite'
 import { getThemeVisual, slotBackgroundStyle, toLegacyThemeStyle } from '../../lib/themeStyle'
 import { sectionSlotProps, SlotChrome } from '../../components/SlotChrome'
 import {
@@ -42,7 +43,7 @@ export default function VersionA({
 }: Props) {
   const [params] = useSearchParams()
   const base = (dataProp ?? defaultData) as InvitationData
-  const guestName = params.get('kpd') || base.guestName
+  const guestName = resolveGuestNameFromSearch(params, base.guestName)
   const [opened, setOpened] = useState(forceOpen)
 
   const data = useMemo(
@@ -199,7 +200,7 @@ export default function VersionA({
 
             <MusicPlayer
               src={data.musicUrl}
-              active={isOpen}
+              active={previewMode || isOpen}
               accent={colors.accent}
             />
           </div>

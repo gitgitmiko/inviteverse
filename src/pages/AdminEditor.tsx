@@ -1,22 +1,28 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
+import AppAccount from '../components/AppAccount'
 import ThemePreview from '../components/ThemePreview'
 import { useAuth } from '../components/AuthProvider'
-import { useInvitation } from '../components/InvitationProvider'
 import { scrollPreviewToSection } from '../components/useScrollPreviewToSection'
-import { logout } from '../lib/authStore'
 import {
   getActiveVisual,
   getDefaultInvitation,
   patchActiveThemeVisual,
-  resetActiveThemeVisual,
   setActiveTheme,
+  type InvitationData,
 } from '../lib/invitationStore'
+import { isSupabaseConfigured } from '../lib/supabase'
 import {
   SECTION_LABELS,
   THEME_LIST,
   THEME_REGISTRY,
 } from '../lib/themeRegistry'
+import {
+  getCodeThemeStyles,
+  loadAllThemeStyles,
+  resetThemeTemplate,
+  saveThemeTemplate,
+} from '../lib/themeTemplates'
 import type { SectionId, ThemeId, ThemeVisualStyle } from '../lib/themeTypes'
 import {
   ColorField,
@@ -29,19 +35,29 @@ import './Editor.css'
 
 type AdminPanel = 'menu' | 'warna' | 'cover' | 'section'
 
+function buildPreviewData(
+  themeId: ThemeId,
+  themeStyles: Record<ThemeId, ThemeVisualStyle>,
+): InvitationData {
+  const base = getDefaultInvitation()
+  return {
+    ...base,
+    activeTheme: themeId,
+    theme: themeId,
+    themeStyles,
+  }
+}
+
 export default function AdminEditor() {
   const user = useAuth()
-  const navigate = useNavigate()
-  const {
-    data,
-    updateData: setData,
-    save,
-    saving,
-    activeId,
-    activeRow,
-    loading,
-    error: invError,
-  } = useInvitation()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const themeFromUrl = searchParams.get('theme') as ThemeId | null
+
+  const [data, setData] = useState<InvitationData>(() =>
+    buildPreviewData('super-classic', getCodeThemeStyles()),
+  )
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
   const [panel, setPanel] = useState<AdminPanel>('menu')
   const [sectionId, setSectionId] = useState<SectionId>('couple')
   const [savedFlash, setSavedFlash] = useState(false)
@@ -50,11 +66,47 @@ export default function AdminEditor() {
   const [focusNonce, setFocusNonce] = useState(0)
   const previewRef = useRef<HTMLDivElement | null>(null)
 
-  const bumpFocus = () => setFocusNonce((n) => n + 1)
-
-  const onLogout = () => {
-    void logout().then(() => navigate('/'))
+  const uploadTarget = {
+    kind: 'theme' as const,
+    themeId: data.activeTheme,
   }
+
+  useEffect(() => {
+    let cancelled = false
+    void (async () => {
+      setLoading(true)
+      setSaveError(null)
+      try {
+        const styles = isSupabaseConfigured
+          ? await loadAllThemeStyles()
+          : getCodeThemeStyles()
+        if (cancelled) return
+        const initialTheme =
+          themeFromUrl && THEME_REGISTRY[themeFromUrl]
+            ? themeFromUrl
+            : 'super-classic'
+        setData(buildPreviewData(initialTheme, styles))
+      } catch (err) {
+        if (!cancelled) {
+          setSaveError(
+            err instanceof Error
+              ? err.message
+              : 'Gagal memuat template. Pastikan SQL 003_theme_templates.sql sudah dijalankan.',
+          )
+          setData(buildPreviewData('super-classic', getCodeThemeStyles()))
+        }
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+    // Hanya load awal; ganti tema di UI tidak reload dari DB
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const bumpFocus = () => setFocusNonce((n) => n + 1)
 
   const openPanel = (next: AdminPanel) => {
     setPanel(next)
@@ -109,35 +161,73 @@ export default function AdminEditor() {
 
   const flashSave = async () => {
     setSaveError(null)
+    setSaving(true)
     try {
-      await save()
+      const styles = getActiveVisual(data)
+      await saveThemeTemplate(data.activeTheme, styles)
       setSavedFlash(true)
       window.setTimeout(() => setSavedFlash(false), 1200)
     } catch (err) {
-      setSaveError(err instanceof Error ? err.message : 'Gagal menyimpan')
+      setSaveError(
+        err instanceof Error
+          ? err.message
+          : 'Gagal menyimpan template. Cek SQL 003 & role admin.',
+      )
+    } finally {
+      setSaving(false)
     }
   }
 
-  const onResetTheme = () => {
+  const onResetTheme = async () => {
     const label = meta.label
     if (
       !window.confirm(
-        `Reset setelan visual tema "${label}" ke awal?\n\nOrnamen, warna, background, dan bingkai tema ini saja yang dikembalikan. Tema lain & konten undangan tetap.`,
+        `Reset template tema "${label}" ke default code?\n\nOrnamen & visual custom di DB untuk tema ini akan dihapus.`,
       )
     ) {
       return
     }
-    setData((prev) => resetActiveThemeVisual(prev))
+    setSaving(true)
+    setSaveError(null)
+    try {
+      const styles = await resetThemeTemplate(data.activeTheme)
+      setData((prev) => ({
+        ...prev,
+        themeStyles: { ...prev.themeStyles, [data.activeTheme]: styles },
+      }))
+    } catch (err) {
+      setSaveError(err instanceof Error ? err.message : 'Gagal reset')
+    } finally {
+      setSaving(false)
+    }
   }
 
-  const onResetAll = () => {
-    if (!window.confirm('Reset SEMUA data & visual semua tema ke default?')) return
-    setData(getDefaultInvitation())
-    setPanel('menu')
+  const onResetAll = async () => {
+    if (
+      !window.confirm(
+        'Reset SEMUA template tema ke default code? Ornamen custom di semua tema akan hilang dari DB.',
+      )
+    ) {
+      return
+    }
+    setSaving(true)
+    try {
+      const next = { ...data.themeStyles }
+      for (const t of THEME_LIST) {
+        next[t.id] = await resetThemeTemplate(t.id)
+      }
+      setData((prev) => ({ ...prev, themeStyles: next }))
+      setPanel('menu')
+    } catch (err) {
+      setSaveError(err instanceof Error ? err.message : 'Gagal reset')
+    } finally {
+      setSaving(false)
+    }
   }
 
   const onThemeChange = (id: ThemeId) => {
     setData((prev) => setActiveTheme(prev, id))
+    setSearchParams({ theme: id })
   }
 
   const section = visual.sections[sectionId]
@@ -145,44 +235,38 @@ export default function AdminEditor() {
   if (loading) {
     return (
       <div className="ed" style={{ placeContent: 'center', minHeight: '100dvh' }}>
-        <p style={{ textAlign: 'center', color: '#6b635a' }}>Memuat undangan…</p>
+        <p style={{ textAlign: 'center', color: '#6b635a' }}>
+          Memuat template tema…
+        </p>
       </div>
     )
-  }
-
-  if (!activeId) {
-    return <Navigate to="/invitations" replace />
   }
 
   return (
     <div className="ed ed--admin">
       <header className="ed__top">
-        <Link to="/invitations" className="ed__link">
-          ← Undanganku
+        <Link to="/themes" className="ed__link">
+          ← Template tema
         </Link>
         <div className="ed__top-title">
-          <strong>Admin · Tema & Aset</strong>
+          <strong>Editor · Template tema</strong>
           <span>
-            {user?.name ?? 'Admin'} · {meta.label} · font {meta.fonts.display} /{' '}
-            {meta.fonts.body}
-            {activeRow?.status === 'published' ? ' · published' : ' · draft'}
+            {meta.label} · {meta.fonts.display} / {meta.fonts.body} · global
           </span>
         </div>
         <div className="ed__top-actions">
-          <Link to="/invitations" className="ed__ghost">
-            Undanganku
+          <Link to="/themes" className="ed__ghost">
+            Semua tema
           </Link>
           <button
             type="button"
             className="ed__ghost"
-            onClick={onResetTheme}
-            title={`Reset setelan ${meta.label} ke awal`}
+            onClick={() => void onResetTheme()}
+            title={`Reset template ${meta.label}`}
           >
             Reset tema
           </button>
-          <button type="button" className="ed__ghost" onClick={onLogout}>
-            Keluar
-          </button>
+          {user && <AppAccount user={user} tone="dark" />}
           <button
             type="button"
             className="ed__save"
@@ -193,7 +277,7 @@ export default function AdminEditor() {
           </button>
         </div>
       </header>
-      {(saveError || invError) && (
+      {saveError && (
         <p
           style={{
             margin: 0,
@@ -203,14 +287,14 @@ export default function AdminEditor() {
             fontSize: '0.85rem',
           }}
         >
-          {saveError || invError}
+          {saveError}
         </p>
       )}
 
       <div className="ed__body">
         <aside className="ed__preview-wrap">
           <div className="ed__preview-bar">
-            <span>Preview · {meta.label}</span>
+            <span>Preview template · {meta.label}</span>
             <button
               type="button"
               className="ed__ghost"
@@ -235,8 +319,13 @@ export default function AdminEditor() {
         <section className="ed__sheet is-open">
           {panel === 'menu' ? (
             <div className="ed__menu">
-              <p className="ed__role-badge">Mode Admin</p>
-              <h2>Kelola tampilan tema</h2>
+              <p className="ed__role-badge">Mode Admin · Template global</p>
+              <h2>Kelola template tema</h2>
+              <p className="ed__hint">
+                Edit visual & ornamen untuk <strong>template tema</strong> (bukan
+                undangan user). Undangan baru akan memakai template ini. Konten
+                teks di preview hanya contoh.
+              </p>
 
               <Field label="Tema aktif">
                 <select
@@ -296,8 +385,12 @@ export default function AdminEditor() {
               <p className="ed__hint" style={{ marginTop: '1.25rem' }}>
                 Zona berbahaya
               </p>
-              <button type="button" className="ed__ghost" onClick={onResetAll}>
-                Reset semua data & semua tema
+              <button
+                type="button"
+                className="ed__ghost"
+                onClick={() => void onResetAll()}
+              >
+                Reset semua template tema
               </button>
             </div>
           ) : (
@@ -429,7 +522,7 @@ export default function AdminEditor() {
                       />
                     ) : (
                       <ImageField
-                      invitationId={activeId}
+                      uploadTarget={uploadTarget}
                         label="Gambar background"
                         value={visual.cover.background.image}
                         onChange={(image) =>
@@ -447,7 +540,7 @@ export default function AdminEditor() {
                       />
                     )}
                     <OrnamentListEditor
-                      invitationId={activeId}
+                      uploadTarget={uploadTarget}
                       ornaments={visual.cover.ornaments ?? []}
                       onChange={(ornaments) =>
                         patchVisual({
@@ -456,7 +549,7 @@ export default function AdminEditor() {
                       }
                     />
                     <ImageField
-                      invitationId={activeId}
+                      uploadTarget={uploadTarget}
                       label="Bingkai foto sampul"
                       value={visual.cover.photoFrame}
                       onChange={(photoFrame) =>
@@ -558,7 +651,7 @@ export default function AdminEditor() {
                         {visual.ornamentMode === 'image' && (
                           <>
                             <ImageField
-                      invitationId={activeId}
+                      uploadTarget={uploadTarget}
                               label="Pojok kiri atas"
                               value={visual.cover.corners.topLeft}
                               onChange={(topLeft) =>
@@ -574,7 +667,7 @@ export default function AdminEditor() {
                               }
                             />
                             <ImageField
-                      invitationId={activeId}
+                      uploadTarget={uploadTarget}
                               label="Pojok kanan atas"
                               value={visual.cover.corners.topRight}
                               onChange={(topRight) =>
@@ -590,7 +683,7 @@ export default function AdminEditor() {
                               }
                             />
                             <ImageField
-                      invitationId={activeId}
+                      uploadTarget={uploadTarget}
                               label="Pojok kiri bawah"
                               value={visual.cover.corners.bottomLeft}
                               onChange={(bottomLeft) =>
@@ -606,7 +699,7 @@ export default function AdminEditor() {
                               }
                             />
                             <ImageField
-                      invitationId={activeId}
+                      uploadTarget={uploadTarget}
                               label="Pojok kanan bawah"
                               value={visual.cover.corners.bottomRight}
                               onChange={(bottomRight) =>
@@ -690,7 +783,7 @@ export default function AdminEditor() {
                       />
                     ) : (
                       <ImageField
-                      invitationId={activeId}
+                      uploadTarget={uploadTarget}
                         label="Gambar background section"
                         value={section.background.image}
                         onChange={(image) =>
@@ -711,7 +804,7 @@ export default function AdminEditor() {
                       />
                     )}
                     <OrnamentListEditor
-                      invitationId={activeId}
+                      uploadTarget={uploadTarget}
                       ornaments={section.ornaments ?? []}
                       onChange={(ornaments) =>
                         patchVisual({
@@ -737,7 +830,7 @@ export default function AdminEditor() {
                     {sectionId === 'couple' && (
                       <>
                         <ImageField
-                      invitationId={activeId}
+                      uploadTarget={uploadTarget}
                           label="Bingkai foto pria"
                           value={section.frames.groom}
                           onChange={(groom) =>
@@ -773,7 +866,7 @@ export default function AdminEditor() {
                           />
                         ) : null}
                         <ImageField
-                      invitationId={activeId}
+                      uploadTarget={uploadTarget}
                           label="Bingkai foto wanita"
                           value={section.frames.bride}
                           onChange={(bride) =>
@@ -813,7 +906,7 @@ export default function AdminEditor() {
                     {(sectionId === 'hero' || sectionId === 'couple') && (
                       <>
                       <ImageField
-                      invitationId={activeId}
+                      uploadTarget={uploadTarget}
                         label="Bingkai foto tambahan"
                         value={section.frames.cover}
                         onChange={(cover) =>
@@ -871,7 +964,7 @@ export default function AdminEditor() {
         <button type="button" onClick={() => openPanel('section')}>
           Section
         </button>
-        <Link to="/invitations">Undanganku</Link>
+        <Link to="/themes">Template</Link>
       </nav>
     </div>
   )

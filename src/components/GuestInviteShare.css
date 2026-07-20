@@ -1,0 +1,113 @@
+.gis {
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--line, #e4ddd4);
+}
+
+.gis h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 0 0 0.35rem;
+}
+
+.gis__lead {
+  margin: 0 0 1rem;
+  color: var(--muted, #6b635a);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.gis__lead code {
+  font-size: 0.8rem;
+}
+
+.gis__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--muted, #6b635a);
+  margin-bottom: 0.85rem;
+}
+
+.gis__field input,
+.gis__field select {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--line, #e4ddd4);
+  border-radius: 6px;
+  font: inherit;
+  color: var(--ink, #2c2824);
+  background: var(--card, #fffcf8);
+}
+
+.gis__block {
+  margin-top: 0.85rem;
+  padding: 0.85rem;
+  border: 1px solid var(--line, #e4ddd4);
+  border-radius: 10px;
+  background: var(--card, #fffcf8);
+}
+
+.gis__block-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.gis__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.gis__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid var(--line, #e4ddd4);
+  background: transparent;
+  color: var(--ink, #2c2824);
+}
+
+.gis__btn--wa {
+  background: #1f6b45;
+  border-color: #1f6b45;
+  color: #fff;
+}
+
+.gis__link {
+  display: block;
+  word-break: break-all;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--accent, #8b6914);
+}
+
+.gis__hint {
+  margin: 0.45rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted, #6b635a);
+}
+
+.gis__msg {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line, #e4ddd4);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--ink, #2c2824);
+  background: #faf7f2;
+}

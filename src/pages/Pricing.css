@@ -1,0 +1,233 @@
+.price {
+  --ink: #1a1714;
+  --muted: #6b635a;
+  --line: #e4ddd4;
+  --accent: #2f5d4a;
+  --bg: #f4efe8;
+  --card: #fffcf8;
+  min-height: 100dvh;
+  background:
+    radial-gradient(ellipse 70% 45% at 0% 0%, rgba(47, 93, 74, 0.12), transparent 50%),
+    var(--bg);
+  color: var(--ink);
+  font-family: 'Work Sans', system-ui, sans-serif;
+}
+
+.price__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--card) 90%, transparent);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.price__logo {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.85rem;
+  font-weight: 400;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1;
+}
+
+.price__nav-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.65rem 0.85rem;
+}
+
+.price__nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.price__main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+.price__eyebrow {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.price__head h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 600;
+  margin: 0.35rem 0;
+}
+
+.price__head p {
+  color: var(--muted);
+  max-width: 40rem;
+  line-height: 1.5;
+}
+
+.price__dev {
+  margin: 0.75rem 0 0;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  background: #fff6e8;
+  border: 1px solid #e8d4b0;
+  color: #6a5228;
+  font-size: 0.85rem;
+}
+
+.price__dev code {
+  font-size: 0.78rem;
+}
+
+.price__current {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.price__banner {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #e8f0e4;
+  color: #2d4a28;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.price__banner.is-error {
+  background: #f8e8e6;
+  color: #7a2e28;
+}
+
+.price__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.price-card {
+  position: relative;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.price-card.is-popular {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.price-card.is-current {
+  background: color-mix(in srgb, var(--accent) 6%, var(--card));
+}
+
+.price-card__tag {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  background: var(--accent);
+  color: #fff;
+}
+
+.price-card h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.45rem;
+  margin: 0;
+}
+
+.price-card__blurb {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  min-height: 2.4em;
+}
+
+.price-card__price {
+  margin: 0.25rem 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.price-card ul {
+  margin: 0 0 0.75rem;
+  padding-left: 1.1rem;
+  flex: 1;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.price-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.price__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+  text-align: center;
+}
+
+.price__btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.price__btn--solid {
+  background: var(--accent);
+  color: #fff;
+}
+
+.price__btn--ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.price__note {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.price__note h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: var(--ink);
+  margin: 0 0 0.5rem;
+}
+
+.price__note a {
+  color: var(--accent);
+}

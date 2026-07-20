@@ -1,12 +1,17 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './components/AuthProvider'
-import { InvitationProvider, useOptionalInvitation } from './components/InvitationProvider'
+import {
+  InvitationProvider,
+  useOptionalInvitation,
+} from './components/InvitationProvider'
 import RequireAuth from './components/RequireAuth'
 import CompareHome from './pages/CompareHome'
 import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
 import InvitationsPage from './pages/Invitations'
+import AdminThemesPage from './pages/AdminThemes'
 import PublicInvitation from './pages/PublicInvitation'
+import PricingPage from './pages/Pricing'
 import Editor from './pages/Editor'
 import AdminEditor from './pages/AdminEditor'
 import VersionA from './themes/super-classic-a/VersionA'
@@ -55,11 +60,20 @@ export default function App() {
             <Route
               path="/invitations"
               element={
-                <RequireAuth allow={['user', 'admin']}>
+                <RequireAuth allow="user">
                   <InvitationsPage />
                 </RequireAuth>
               }
             />
+            <Route
+              path="/themes"
+              element={
+                <RequireAuth allow="admin">
+                  <AdminThemesPage />
+                </RequireAuth>
+              }
+            />
+            <Route path="/harga" element={<PricingPage />} />
             <Route path="/i/:slug" element={<PublicInvitation />} />
             <Route path="/a" element={<VersionAPage />} />
             <Route path="/eg" element={<EleganGreyPage />} />

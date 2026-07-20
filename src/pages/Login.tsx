@@ -19,15 +19,11 @@ export default function LoginPage() {
   if (user) {
     const dest =
       user.role === 'admin'
-        ? from.startsWith('/admin') || from === '/'
-          ? from === '/'
-            ? '/invitations'
-            : from
-          : '/invitations'
-        : from.startsWith('/edit') || from === '/'
-          ? from === '/'
-            ? '/invitations'
-            : from
+        ? from.startsWith('/admin') || from.startsWith('/themes')
+          ? from
+          : '/themes'
+        : from.startsWith('/edit') || from.startsWith('/invitations')
+          ? from
           : '/invitations'
     return <Navigate to={dest} replace />
   }
@@ -42,12 +38,17 @@ export default function LoginPage() {
       setError(result.error)
       return
     }
-    navigate(
-      from.startsWith('/edit') || from.startsWith('/admin')
+    const role = result.user.role
+    const dest =
+      from.startsWith('/edit') ||
+      from.startsWith('/admin') ||
+      from.startsWith('/themes') ||
+      from.startsWith('/invitations')
         ? from
-        : '/invitations',
-      { replace: true },
-    )
+        : role === 'admin'
+          ? '/themes'
+          : '/invitations'
+    navigate(dest, { replace: true })
   }
 
   return (
@@ -56,7 +57,7 @@ export default function LoginPage() {
         <Link to="/" className="auth-back">
           ← Beranda
         </Link>
-        <p className="auth-card__brand">Vowly</p>
+        <p className="auth-card__brand">Invite VERSE</p>
         <p className="auth-card__eyebrow">Undangan digital</p>
         <h1>Masuk</h1>
         <p className="auth-card__lead">

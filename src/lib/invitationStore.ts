@@ -12,6 +12,7 @@ import {
 import type { ThemeId, ThemeVisualStyle } from './themeTypes'
 import type { InvitationRow } from './supabase'
 import { requireSupabase } from './supabase'
+import { buildThemeStylesForNewInvitation, loadThemeStatuses } from './themeTemplates'
 
 export type InvitationData = Omit<
   typeof defaultData,
@@ -171,6 +172,51 @@ export async function listMyInvitations(): Promise<InvitationRow[]> {
   return (data ?? []) as InvitationRow[]
 }
 
+/** User: milik sendiri. Admin: semua undangan (untuk edit tema). */
+export async function listAccessibleInvitations(
+  role: 'user' | 'admin',
+): Promise<InvitationRow[]> {
+  if (role !== 'admin') return listMyInvitations()
+
+  const client = requireSupabase()
+  const { data: session } = await client.auth.getUser()
+  if (!session.user) throw new Error('Belum login')
+
+  const { data, error } = await client
+    .from('invitations')
+    .select('*')
+    .order('updated_at', { ascending: false })
+
+  if (error) throw error
+  return (data ?? []) as InvitationRow[]
+}
+
+async function assertCanCreateInvitation() {
+  const client = requireSupabase()
+  const { data: session } = await client.auth.getUser()
+  if (!session.user) throw new Error('Belum login')
+
+  const { data: profile, error } = await client
+    .from('profiles')
+    .select('role')
+    .eq('id', session.user.id)
+    .maybeSingle()
+
+  if (error) throw error
+  if (profile?.role === 'admin') {
+    throw new Error(
+      'Akun admin tidak dapat membuat undangan. Admin hanya mengedit tema.',
+    )
+  }
+}
+
+async function assertThemePublished(themeId: ThemeId) {
+  const statuses = await loadThemeStatuses()
+  if (statuses[themeId] !== 'published') {
+    throw new Error('Tema belum siap pakai. Pilih tema yang sudah di-publish.')
+  }
+}
+
 export async function getInvitationById(id: string): Promise<InvitationRow> {
   const client = requireSupabase()
   const { data, error } = await client
@@ -201,13 +247,31 @@ export async function createInvitation(input?: {
   themeId?: ThemeId
   fromData?: InvitationData
 }): Promise<InvitationRow> {
+  await assertCanCreateInvitation()
   const client = requireSupabase()
   const { data: session } = await client.auth.getUser()
   if (!session.user) throw new Error('Belum login')
 
-  const seed = input?.fromData ?? getDefaultInvitation()
+  const templateStyles = await buildThemeStylesForNewInvitation()
+
+  const seed = input?.fromData
+    ? normalizeInvitation(input.fromData)
+    : normalizeInvitation({
+        themeStyles: templateStyles,
+        activeTheme: input?.themeId,
+        theme: input?.themeId,
+      })
   const themeId = input?.themeId ?? seed.activeTheme
-  const withTheme = setActiveTheme(seed, themeId)
+  if (!input?.fromData) {
+    await assertThemePublished(themeId)
+  }
+  const withTheme = setActiveTheme(
+    {
+      ...seed,
+      themeStyles: input?.fromData ? seed.themeStyles : templateStyles,
+    },
+    themeId,
+  )
   const payload = splitInvitationPayload(withTheme)
   const title =
     input?.title ||
@@ -232,6 +296,26 @@ export async function createInvitation(input?: {
   const row = data as InvitationRow
   setActiveInvitationId(row.id)
   return row
+}
+
+/** Simpan hanya visual tema (untuk admin) */
+export async function saveInvitationThemeRemote(
+  id: string,
+  data: InvitationData,
+): Promise<InvitationRow> {
+  const client = requireSupabase()
+  const payload = splitInvitationPayload(data)
+  const { data: row, error } = await client
+    .from('invitations')
+    .update({
+      active_theme: payload.active_theme,
+      theme_styles: payload.theme_styles,
+    })
+    .eq('id', id)
+    .select('*')
+    .single()
+  if (error) throw error
+  return row as InvitationRow
 }
 
 export async function saveInvitationRemote(

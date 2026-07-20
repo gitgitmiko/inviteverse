@@ -37,7 +37,7 @@ export default function RegisterPage() {
         <Link to="/" className="auth-back">
           ← Beranda
         </Link>
-        <p className="auth-card__brand">Vowly</p>
+        <p className="auth-card__brand">Invite VERSE</p>
         <p className="auth-card__eyebrow">Undangan digital</p>
         <h1>Daftar</h1>
         <p className="auth-card__lead">

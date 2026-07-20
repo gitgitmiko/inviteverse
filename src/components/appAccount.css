@@ -1,0 +1,108 @@
+.app-account {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.28rem 0.35rem;
+  border: 1px solid var(--app-account-line, rgba(22, 19, 15, 0.12));
+  border-radius: 999px;
+  background: var(--app-account-bg, rgba(255, 252, 247, 0.78));
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.55) inset;
+  color: var(--app-account-ink, #16130f);
+}
+
+.app-account__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding-left: 0.15rem;
+}
+
+.app-account__avatar {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 50%;
+  background: var(--app-account-accent, #2f5d4a);
+  color: #f7f2ea;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.app-account__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.15;
+  padding-right: 0.15rem;
+}
+
+.app-account__name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 9.5rem;
+}
+
+.app-account__role {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--app-account-muted, #6e655c);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.app-account__logout {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  background: var(--app-account-logout-bg, rgba(22, 19, 15, 0.06));
+  color: inherit;
+}
+
+.app-account__logout:hover {
+  background: var(--app-account-logout-hover, rgba(22, 19, 15, 0.1));
+}
+
+.app-account--dark {
+  --app-account-line: rgba(196, 165, 116, 0.28);
+  --app-account-bg: rgba(255, 255, 255, 0.06);
+  --app-account-ink: #f3ebe2;
+  --app-account-muted: #a89a8c;
+  --app-account-accent: #c4a574;
+  --app-account-logout-bg: rgba(255, 255, 255, 0.08);
+  --app-account-logout-hover: rgba(255, 255, 255, 0.14);
+  box-shadow: none;
+}
+
+.app-account--dark .app-account__avatar {
+  color: #181410;
+}
+
+@media (max-width: 640px) {
+  .app-account__name {
+    max-width: 6.5rem;
+  }
+
+  .app-account__role {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .ed .app-account__name {
+    max-width: 5.5rem;
+  }
+}

@@ -28,32 +28,27 @@
 }
 
 .inv__logo {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.85rem;
+  font-weight: 400;
   color: var(--ink);
   text-decoration: none;
-  letter-spacing: 0.02em;
+  line-height: 1;
 }
 
 .inv__nav-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.75rem;
+  justify-content: flex-end;
+  gap: 0.65rem 0.85rem;
 }
 
-.inv__user {
+.inv__nav-links {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  font-size: 0.85rem;
-  line-height: 1.2;
-}
-
-.inv__user em {
-  font-style: normal;
-  color: var(--muted);
-  font-size: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .inv__main {
@@ -192,8 +187,8 @@
 }
 
 .inv__status--draft {
-  background: #eee8e0;
-  color: var(--muted);
+  background: #f3e8d8;
+  color: #8a5a20;
 }
 
 .inv__status--published {
@@ -233,9 +228,44 @@
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
+.inv__publish-lock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1 1 100%;
+  margin-top: 0.35rem;
+  padding: 0.75rem;
+  border: 1px dashed #c4a574;
+  border-radius: 8px;
+  background: #faf6ef;
+  font-size: 0.85rem;
+  color: #5c4a32;
+}
+
+.inv__publish-lock p {
+  margin: 0;
+}
+
 .inv__empty {
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.inv__empty p {
+  margin: 0 0 0.75rem;
+}
+
+.inv__steps {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  line-height: 1.45;
+}
+
+.inv__steps code {
+  font-size: 0.8rem;
 }
 
 .pub-state {

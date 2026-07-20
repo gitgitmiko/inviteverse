@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../components/AuthProvider'
+import AppAccount from '../components/AppAccount'
 import { useOptionalInvitation } from '../components/InvitationProvider'
-import { logout } from '../lib/authStore'
-import { THEME_LIST, type ThemeMeta } from '../lib/themeRegistry'
+import { useVisibleThemes } from '../hooks/useVisibleThemes'
+import type { ThemeMeta } from '../lib/themeRegistry'
 import { setActiveTheme } from '../lib/invitationStore'
 import type { ThemeId } from '../lib/themeTypes'
+import type { ThemePublishStatus } from '../lib/themeTemplates'
 import './CompareHome.css'
 
 const THEME_BLURBS: Record<
@@ -29,6 +31,7 @@ export default function CompareHome() {
   const user = useAuth()
   const navigate = useNavigate()
   const inv = useOptionalInvitation()
+  const { themes, loading: themesLoading, isAdmin } = useVisibleThemes()
 
   const applyTheme = (id: ThemeId) => {
     if (inv?.activeId) {
@@ -43,80 +46,75 @@ export default function CompareHome() {
       return
     }
     if (user.role !== 'user') {
-      navigate('/invitations')
+      navigate('/themes')
       return
     }
     navigate(inv?.activeId ? '/edit' : '/invitations')
   }
 
   const goEditTheme = (id: ThemeId) => {
-    applyTheme(id)
     if (!user) {
-      navigate('/login', { state: { from: '/invitations' } })
+      navigate('/login', { state: { from: '/themes' } })
       return
     }
     if (user.role !== 'admin') {
       navigate('/invitations')
       return
     }
-    navigate(inv?.activeId ? '/admin' : '/invitations')
+    navigate(`/admin?theme=${id}`)
   }
 
   return (
     <div className="home">
       <header className="home__nav">
         <Link to="/" className="home__logo">
-          Vowly
+          Invite VERSE
         </Link>
         <div className="home__nav-actions">
-          {user ? (
-            <>
-              <span className="home__user">
-                {user.name}
-                <em>{user.role === 'admin' ? 'Admin' : 'User'}</em>
-              </span>
-              <Link to="/invitations" className="home__btn home__btn--ghost">
-                Undanganku
-              </Link>
-              {user.role === 'user' && inv?.activeId && (
-                <Link to="/edit" className="home__btn home__btn--ghost">
-                  Edit konten
+          <nav className="home__nav-links" aria-label="Navigasi utama">
+            <Link to="/harga" className="home__btn home__btn--ghost">
+              Harga
+            </Link>
+            {user ? (
+              <>
+                <Link
+                  to={user.role === 'admin' ? '/themes' : '/invitations'}
+                  className="home__btn home__btn--ghost"
+                >
+                  {user.role === 'admin' ? 'Template tema' : 'Undanganku'}
                 </Link>
-              )}
-              {user.role === 'admin' && inv?.activeId && (
-                <Link to="/admin" className="home__btn home__btn--ghost">
-                  Edit tema
+                {user.role === 'user' && inv?.activeId && (
+                  <Link to="/edit" className="home__btn home__btn--ghost">
+                    Edit konten
+                  </Link>
+                )}
+                {user.role === 'admin' && (
+                  <Link to="/themes" className="home__btn home__btn--ghost">
+                    Edit template
+                  </Link>
+                )}
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="home__btn home__btn--ghost">
+                  Masuk
                 </Link>
-              )}
-              <button
-                type="button"
-                className="home__btn home__btn--ghost"
-                onClick={() => {
-                  void logout().then(() => navigate('/'))
-                }}
-              >
-                Keluar
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="home__btn home__btn--ghost">
-                Masuk
-              </Link>
-              <Link to="/register" className="home__btn home__btn--solid">
-                Daftar
-              </Link>
-            </>
-          )}
+                <Link to="/register" className="home__btn home__btn--solid">
+                  Daftar
+                </Link>
+              </>
+            )}
+          </nav>
+          {user && <AppAccount user={user} />}
         </div>
       </header>
 
       <section className="home__hero">
-        <p className="home__brand">Vowly</p>
+        <p className="home__brand">Invite VERSE</p>
         <h1>Undangan digital yang siap dikustom.</h1>
         <p className="home__lead">
-          Pilih tema, pratinjau bebas. Login untuk menyimpan undangan di cloud —
-          user mengatur konten, admin mengatur tampilan tema.
+          Pilih tema, pratinjau bebas. User membuat undangan & mengedit konten;
+          admin mengelola template tema global (ornamen & visual).
         </p>
         {!user && (
           <div className="home__hero-cta">
@@ -130,8 +128,13 @@ export default function CompareHome() {
         )}
         {user && (
           <div className="home__hero-cta">
-            <Link to="/invitations" className="home__btn home__btn--solid">
-              Kelola undanganku
+            <Link
+              to={user.role === 'admin' ? '/themes' : '/invitations'}
+              className="home__btn home__btn--solid"
+            >
+              {user.role === 'admin'
+                ? 'Kelola template tema'
+                : 'Kelola undanganku'}
             </Link>
           </div>
         )}
@@ -140,22 +143,41 @@ export default function CompareHome() {
       <section className="home__themes">
         <div className="home__themes-head">
           <h2>Tema undangan</h2>
-          <p>Tiga tema siap pakai. Preview tanpa login.</p>
+          <p>
+            {isAdmin
+              ? 'Admin: semua template (draft & siap pakai).'
+              : 'Hanya tema yang sudah siap pakai.'}
+          </p>
         </div>
 
-        <div className="home__theme-grid">
-          {THEME_LIST.map((theme) => (
-            <ThemeCard
-              key={theme.id}
-              theme={theme}
-              blurb={THEME_BLURBS[theme.id]}
-              role={user?.role ?? null}
-              onPreview={() => applyTheme(theme.id)}
-              onEditContent={() => goEditContent(theme.id)}
-              onEditTheme={() => goEditTheme(theme.id)}
-            />
-          ))}
-        </div>
+        {themesLoading ? (
+          <p className="home__themes-empty">Memuat tema…</p>
+        ) : themes.length === 0 ? (
+          <p className="home__themes-empty">
+            Belum ada tema siap pakai. Admin perlu mem-publish template dulu.
+          </p>
+        ) : (
+          <div className="home__theme-grid">
+            {themes.map((theme) => (
+              <ThemeCard
+                key={theme.id}
+                theme={theme}
+                blurb={
+                  THEME_BLURBS[theme.id] ?? {
+                    tagline: 'Template undangan.',
+                    tone: 'cream',
+                  }
+                }
+                status={theme.status}
+                showStatus={isAdmin}
+                role={user?.role ?? null}
+                onPreview={() => applyTheme(theme.id)}
+                onEditContent={() => goEditContent(theme.id)}
+                onEditTheme={() => goEditTheme(theme.id)}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       <footer className="home__foot">
@@ -172,6 +194,8 @@ export default function CompareHome() {
 function ThemeCard({
   theme,
   blurb,
+  status,
+  showStatus,
   role,
   onPreview,
   onEditContent,
@@ -179,6 +203,8 @@ function ThemeCard({
 }: {
   theme: ThemeMeta
   blurb: { tagline: string; tone: string }
+  status?: ThemePublishStatus
+  showStatus?: boolean
   role: 'user' | 'admin' | null
   onPreview: () => void
   onEditContent: () => void
@@ -190,7 +216,14 @@ function ThemeCard({
         <span className="home-theme__script">{theme.label}</span>
       </div>
       <div className="home-theme__body">
-        <h3>{theme.label}</h3>
+        <h3>
+          {theme.label}
+          {showStatus && status ? (
+            <em className={`home-theme__badge home-theme__badge--${status}`}>
+              {status === 'published' ? 'Siap pakai' : 'Draft'}
+            </em>
+          ) : null}
+        </h3>
         <p>{blurb.tagline}</p>
         <p className="home-theme__fonts">
           {theme.fonts.display} · {theme.fonts.body}
@@ -218,7 +251,7 @@ function ThemeCard({
               className="home__btn home__btn--ghost"
               onClick={onEditTheme}
             >
-              Edit tema
+              Edit template
             </button>
           )}
           {!role && (

@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+import AppAccount from '../components/AppAccount'
 import ThemePreview from '../components/ThemePreview'
 import { useAuth } from '../components/AuthProvider'
 import { useInvitation } from '../components/InvitationProvider'
+import { PlanFeature } from '../components/PlanFeature'
 import {
   scrollPreviewToSection,
   type PreviewFocusTarget,
 } from '../components/useScrollPreviewToSection'
-import { logout } from '../lib/authStore'
 import {
   resetActiveThemeVisual,
   resetInvitationContent,
@@ -15,6 +16,7 @@ import {
   type InvitationData,
 } from '../lib/invitationStore'
 import { THEME_LIST, THEME_REGISTRY } from '../lib/themeRegistry'
+import { useVisibleThemes } from '../hooks/useVisibleThemes'
 import type { ThemeId } from '../lib/themeTypes'
 import { Field, ImageField } from './editorFields'
 import './Editor.css'
@@ -61,7 +63,6 @@ const PANEL_FOCUS: Record<PanelId, PreviewFocusTarget | null> = {
 
 export default function Editor() {
   const user = useAuth()
-  const navigate = useNavigate()
   const {
     data,
     updateData: setData,
@@ -71,7 +72,12 @@ export default function Editor() {
     activeRow,
     loading,
     error: invError,
+    plan,
+    benefits,
   } = useInvitation()
+  const { themes: publishedThemes } = useVisibleThemes()
+  const themeOptions =
+    publishedThemes.length > 0 ? publishedThemes : THEME_LIST
   const [panel, setPanel] = useState<PanelId>('menu')
   const [savedFlash, setSavedFlash] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
@@ -90,10 +96,6 @@ export default function Editor() {
 
   const themeLabel =
     THEME_REGISTRY[data.activeTheme]?.label ?? data.activeTheme
-
-  const onLogout = () => {
-    void logout().then(() => navigate('/'))
-  }
 
   useEffect(() => {
     if (!focusSection) return
@@ -178,14 +180,17 @@ export default function Editor() {
           ← Undanganku
         </Link>
         <div className="ed__top-title">
-          <strong>Editor User · Konten</strong>
+          <strong>Editor · Konten</strong>
           <span>
-            {user?.name ?? 'User'} · tema:{' '}
+            Paket {plan.name} · tema{' '}
             {THEME_REGISTRY[data.activeTheme]?.label ?? data.activeTheme}
             {activeRow?.status === 'published' ? ' · published' : ' · draft'}
           </span>
         </div>
         <div className="ed__top-actions">
+          <Link to="/harga" className="ed__ghost">
+            Upgrade
+          </Link>
           <Link to="/invitations" className="ed__ghost">
             Undanganku
           </Link>
@@ -205,9 +210,7 @@ export default function Editor() {
           >
             Reset konten
           </button>
-          <button type="button" className="ed__ghost" onClick={onLogout}>
-            Keluar
-          </button>
+          {user && <AppAccount user={user} tone="dark" />}
           <button
             type="button"
             className="ed__save"
@@ -246,7 +249,7 @@ export default function Editor() {
               }
               aria-label="Tema preview"
             >
-              {THEME_LIST.map((t) => (
+              {themeOptions.map((t) => (
                 <option key={t.id} value={t.id}>
                   {t.label}
                 </option>
@@ -269,7 +272,7 @@ export default function Editor() {
           </div>
           <div className="ed__preview" ref={previewRef} data-preview-root="1">
             <ThemePreview
-              key={`${data.activeTheme}-${previewForceOpen}`}
+              key={data.activeTheme}
               data={data}
               forceOpen={previewForceOpen}
               hideBack
@@ -283,11 +286,14 @@ export default function Editor() {
         <section className={`ed__sheet ${panel !== 'menu' ? 'is-open' : ''}`}>
           {panel === 'menu' ? (
             <div className="ed__menu">
-              <p className="ed__role-badge">Mode User</p>
+              <p className="ed__role-badge">
+                Mode User · Paket {plan.name}
+              </p>
               <h2>Komponen Undangan</h2>
               <p className="ed__hint">
-                Edit teks & foto mempelai. Untuk ornamen/warna/background,
-                masuk sebagai akun admin.
+                Fitur mengikuti paket aktif. Butuh musik, galeri, atau titip
+                hadiah?{' '}
+                <Link to="/harga">Lihat harga</Link>.
               </p>
               <div className="ed__menu-list">
                 {NAV.map((item) => (
@@ -434,14 +440,20 @@ export default function Editor() {
                         }
                       />
                     </Field>
-                    <ImageField
-                      label="Foto pria"
-                      value={data.groom.photo}
-                      invitationId={activeId}
-                      onChange={(photo) =>
-                        patch({ groom: { ...data.groom, photo } })
-                      }
-                    />
+                    <PlanFeature
+                      allowed={benefits.couplePhotos}
+                      feature="Foto mempelai"
+                      planName={plan.name}
+                    >
+                      <ImageField
+                        label="Foto pria"
+                        value={data.groom.photo}
+                        invitationId={activeId}
+                        onChange={(photo) =>
+                          patch({ groom: { ...data.groom, photo } })
+                        }
+                      />
+                    </PlanFeature>
                   </>
                 )}
 
@@ -500,14 +512,20 @@ export default function Editor() {
                         }
                       />
                     </Field>
-                    <ImageField
-                      label="Foto wanita"
-                      value={data.bride.photo}
-                      invitationId={activeId}
-                      onChange={(photo) =>
-                        patch({ bride: { ...data.bride, photo } })
-                      }
-                    />
+                    <PlanFeature
+                      allowed={benefits.couplePhotos}
+                      feature="Foto mempelai"
+                      planName={plan.name}
+                    >
+                      <ImageField
+                        label="Foto wanita"
+                        value={data.bride.photo}
+                        invitationId={activeId}
+                        onChange={(photo) =>
+                          patch({ bride: { ...data.bride, photo } })
+                        }
+                      />
+                    </PlanFeature>
                   </>
                 )}
 
@@ -639,6 +657,11 @@ export default function Editor() {
                 )}
 
                 {panel === 'story' && (
+                  <PlanFeature
+                    allowed={benefits.loveStory}
+                    feature="Love Story"
+                    planName={plan.name}
+                  >
                   <>
                     <Field label="Judul">
                       <input
@@ -697,9 +720,15 @@ export default function Editor() {
                       </div>
                     ))}
                   </>
+                  </PlanFeature>
                 )}
 
                 {panel === 'hadiah' && (
+                  <PlanFeature
+                    allowed={benefits.gift}
+                    feature="Titip hadiah"
+                    planName={plan.name}
+                  >
                   <>
                     <Field label="Intro hadiah">
                       <textarea
@@ -748,6 +777,7 @@ export default function Editor() {
                       </div>
                     ))}
                   </>
+                  </PlanFeature>
                 )}
 
                 {panel === 'setting' && (
@@ -761,7 +791,7 @@ export default function Editor() {
                           )
                         }
                       >
-                        {THEME_LIST.map((t) => (
+                        {themeOptions.map((t) => (
                           <option key={t.id} value={t.id}>
                             {t.label}
                           </option>
@@ -785,19 +815,32 @@ export default function Editor() {
                       invitationId={activeId}
                       onChange={(coverPhoto) => patch({ coverPhoto })}
                     />
-                    <Field label="URL musik (MP3 atau YouTube)">
-                      <input
-                        value={data.musicUrl}
-                        onChange={(e) => patch({ musicUrl: e.target.value })}
-                        placeholder="https://youtube.com/watch?v=... atau link .mp3"
-                      />
-                    </Field>
-                    <p className="ed__hint">
-                      YouTube didukung (link watch / youtu.be). Musik mulai
-                      setelah tamu menekan Buka Sampul. Beberapa video YouTube
-                      memblokir embed — jika tidak bunyi, pakai video lain atau
-                      file MP3.
-                    </p>
+                    <PlanFeature
+                      allowed={benefits.music || benefits.customMusic}
+                      feature="Ubah musik undangan"
+                      planName={plan.name}
+                    >
+                      <Field label="URL musik (MP3 atau YouTube)">
+                        <input
+                          value={data.musicUrl}
+                          onChange={(e) => patch({ musicUrl: e.target.value })}
+                          placeholder="https://youtube.com/watch?v=... atau link .mp3"
+                        />
+                      </Field>
+                      <p className="ed__hint">
+                        YouTube didukung (link watch / youtu.be). Musik mulai
+                        setelah tamu menekan Buka Sampul. Beberapa video YouTube
+                        memblokir embed — jika tidak bunyi, pakai video lain atau
+                        file MP3.
+                      </p>
+                    </PlanFeature>
+                    {!benefits.music && data.musicUrl ? (
+                      <p className="ed__hint">
+                        Preview masih memutar musik bawaan tema. Paket{' '}
+                        {plan.name} tidak termasuk mengatur/menyebar musik —
+                        upgrade untuk mengunci musik di undangan published.
+                      </p>
+                    ) : null}
                     <Field label="Teks terima kasih">
                       <input
                         value={data.thanks}

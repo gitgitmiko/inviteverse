@@ -14,15 +14,17 @@ import {
   getActiveInvitationId,
   getDefaultInvitation,
   getInvitationById,
-  listMyInvitations,
+  listAccessibleInvitations,
   rowToInvitationData,
   saveInvitationRemote,
+  saveInvitationThemeRemote,
   setActiveInvitationId,
   setInvitationStatus,
   type InvitationData,
 } from '../lib/invitationStore'
 import type { InvitationRow } from '../lib/supabase'
 import { isSupabaseConfigured } from '../lib/supabase'
+import { getPlan, type PlanBenefits, type PlanDef } from '../lib/plans'
 import type { ThemeId } from '../lib/themeTypes'
 
 type InvitationContextValue = {
@@ -33,6 +35,8 @@ type InvitationContextValue = {
   loading: boolean
   saving: boolean
   error: string | null
+  plan: PlanDef
+  benefits: PlanBenefits
   refreshList: () => Promise<void>
   selectInvitation: (id: string) => Promise<void>
   createNew: (themeId?: ThemeId) => Promise<InvitationRow>
@@ -63,7 +67,7 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
       setList([])
       return
     }
-    const rows = await listMyInvitations()
+    const rows = await listAccessibleInvitations(user.role)
     setList(rows)
   }, [user])
 
@@ -94,7 +98,7 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
     void (async () => {
       setLoading(true)
       try {
-        const rows = await listMyInvitations()
+        const rows = await listAccessibleInvitations(user.role)
         setList(rows)
         const preferred =
           rows.find((r) => r.id === getActiveInvitationId()) ?? rows[0]
@@ -118,6 +122,11 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
 
   const createNew = useCallback(
     async (themeId?: ThemeId) => {
+      if (user?.role === 'admin') {
+        throw new Error(
+          'Akun admin tidak dapat membuat undangan. Admin hanya mengedit tema.',
+        )
+      }
       const row = await createInvitation({ themeId })
       await refreshList()
       setActiveRow(row)
@@ -125,7 +134,7 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
       setData(rowToInvitationData(row))
       return row
     },
-    [refreshList],
+    [refreshList, user?.role],
   )
 
   const updateData = useCallback(
@@ -140,8 +149,12 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
     setSaving(true)
     setError(null)
     try {
-      const title = `${data.groomNickname} & ${data.brideNickname}`
-      const row = await saveInvitationRemote(activeId, data, { title })
+      const row =
+        user?.role === 'admin'
+          ? await saveInvitationThemeRemote(activeId, data)
+          : await saveInvitationRemote(activeId, data, {
+              title: `${data.groomNickname} & ${data.brideNickname}`,
+            })
       setActiveRow(row)
       await refreshList()
     } catch (err) {
@@ -151,25 +164,40 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
     } finally {
       setSaving(false)
     }
-  }, [activeId, data, refreshList])
+  }, [activeId, data, refreshList, user?.role])
 
   const publish = useCallback(async () => {
+    if (user?.role === 'admin') {
+      throw new Error('Admin tidak mempublikasikan undangan')
+    }
     if (!activeId) throw new Error('Belum ada undangan aktif')
+    const currentPlan = getPlan(activeRow?.plan_id ?? 'free')
+    if (!currentPlan.benefits.publish) {
+      throw new Error(
+        `Paket ${currentPlan.name} tidak bisa publish. Upgrade di halaman Harga untuk menyebar undangan.`,
+      )
+    }
     await save()
     const row = await setInvitationStatus(activeId, 'published')
     setActiveRow(row)
     await refreshList()
-  }, [activeId, refreshList, save])
+  }, [activeId, activeRow?.plan_id, refreshList, save, user?.role])
 
   const unpublish = useCallback(async () => {
+    if (user?.role === 'admin') {
+      throw new Error('Admin tidak mengubah status publish')
+    }
     if (!activeId) throw new Error('Belum ada undangan aktif')
     const row = await setInvitationStatus(activeId, 'draft')
     setActiveRow(row)
     await refreshList()
-  }, [activeId, refreshList])
+  }, [activeId, refreshList, user?.role])
 
   const importLocalData = useCallback(
     async (local: InvitationData) => {
+      if (user?.role === 'admin') {
+        throw new Error('Admin tidak dapat mengimpor undangan')
+      }
       const row = await createInvitation({
         fromData: local,
         themeId: local.activeTheme,
@@ -181,13 +209,16 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
       setData(rowToInvitationData(row))
       return row
     },
-    [refreshList],
+    [refreshList, user?.role],
   )
 
   const remove = useCallback(
     async (id: string) => {
+      if (user?.role === 'admin') {
+        throw new Error('Admin tidak dapat menghapus undangan')
+      }
       await deleteInvitation(id)
-      const rows = await listMyInvitations()
+      const rows = await listAccessibleInvitations(user?.role ?? 'user')
       setList(rows)
       if (activeId === id) {
         const next = rows[0] ?? null
@@ -204,8 +235,14 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
         }
       }
     },
-    [activeId],
+    [activeId, user?.role],
   )
+
+  const plan = useMemo(
+    () => getPlan(activeRow?.plan_id ?? 'free'),
+    [activeRow?.plan_id],
+  )
+  const benefits = plan.benefits
 
   const value = useMemo(
     () => ({
@@ -216,6 +253,8 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
       loading,
       saving,
       error,
+      plan,
+      benefits,
       refreshList,
       selectInvitation,
       createNew,
@@ -234,6 +273,8 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
       loading,
       saving,
       error,
+      plan,
+      benefits,
       refreshList,
       selectInvitation,
       createNew,
