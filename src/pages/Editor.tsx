@@ -19,6 +19,7 @@ import { THEME_LIST, THEME_REGISTRY } from '../lib/themeRegistry'
 import { useVisibleThemes } from '../hooks/useVisibleThemes'
 import type { ThemeId } from '../lib/themeTypes'
 import { Field, ImageField } from './editorFields'
+import { updateAssistStatus } from '../lib/assistRequests'
 import './Editor.css'
 
 type PanelId =
@@ -189,7 +190,6 @@ export default function Editor({
     setAssistMsg(null)
     try {
       await save()
-      const { updateAssistStatus } = await import('../lib/assistRequests')
       await updateAssistStatus(assistRequestId, 'done')
       setAssistMsg('Konten disimpan & permintaan ditandai selesai.')
     } catch (err) {

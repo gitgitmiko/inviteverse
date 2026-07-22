@@ -49,21 +49,6 @@ export async function createAssistRequest(input: {
   return data as AssistRequestRow
 }
 
-export async function listMyAssistRequests(): Promise<AssistRequestRow[]> {
-  const client = requireSupabase()
-  const { data: session } = await client.auth.getUser()
-  if (!session.user) throw new Error('Belum login')
-
-  const { data, error } = await client
-    .from('assist_requests')
-    .select('*')
-    .eq('owner_id', session.user.id)
-    .order('created_at', { ascending: false })
-
-  if (error) throw error
-  return (data ?? []) as AssistRequestRow[]
-}
-
 export async function listAssistRequestsAdmin(): Promise<
   AssistRequestAdminRow[]
 > {
@@ -116,22 +101,4 @@ export async function updateAssistStatus(
 
   if (error) throw error
   return data as AssistRequestRow
-}
-
-/** Cari request terbuka untuk undangan (pending / in_progress) */
-export async function findOpenAssistForInvitation(
-  invitationId: string,
-): Promise<AssistRequestRow | null> {
-  const client = requireSupabase()
-  const { data, error } = await client
-    .from('assist_requests')
-    .select('*')
-    .eq('invitation_id', invitationId)
-    .in('status', ['pending', 'in_progress'])
-    .order('created_at', { ascending: false })
-    .limit(1)
-    .maybeSingle()
-
-  if (error) throw error
-  return (data as AssistRequestRow | null) ?? null
 }

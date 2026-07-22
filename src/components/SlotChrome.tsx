@@ -7,7 +7,6 @@ import {
 } from '../lib/themeStyle'
 import type {
   FreeOrnament,
-  OrnamentAnim,
   SectionVisual,
   SlotBackground,
   SlotTransform,
@@ -131,35 +130,5 @@ export function PhotoFrameSlot({
         />
       ) : null}
     </div>
-  )
-}
-
-/** @deprecated gunakan FreeOrnamentItem — tetap untuk kompatibilitas singkat */
-export function OrnamentImage({
-  src,
-  anim = 'none',
-  transform,
-}: {
-  src: string
-  position?: 'top' | 'bottom'
-  anim?: OrnamentAnim
-  transform?: SlotTransform | null
-}) {
-  return (
-    <FreeOrnamentItem
-      ornament={{
-        id: 'legacy',
-        src,
-        anim: anim ?? 'none',
-        transform: {
-          offsetX: transform?.offsetX ?? 0,
-          offsetY: transform?.offsetY ?? 0,
-          scale: transform?.scale ?? 1,
-          rotate: transform?.rotate ?? 0,
-        },
-        flipX: false,
-        flipY: false,
-      }}
-    />
   )
 }

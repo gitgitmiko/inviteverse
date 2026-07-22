@@ -350,24 +350,6 @@ export async function deleteInvitation(id: string): Promise<void> {
   if (getActiveInvitationId() === id) setActiveInvitationId(null)
 }
 
-/** @deprecated sync localStorage — gunakan saveInvitationRemote */
-export function saveInvitation(data: InvitationData) {
-  const { themeStyle: _drop, ...rest } = data as InvitationData & {
-    themeStyle?: unknown
-  }
-  localStorage.setItem(LEGACY_STORAGE_KEY, JSON.stringify(rest))
-}
-
-/** @deprecated sync localStorage */
-export function loadInvitation(): InvitationData {
-  return readLegacyLocalInvitation() ?? getDefaultInvitation()
-}
-
-export function resetInvitation(): InvitationData {
-  clearLegacyLocalInvitation()
-  return getDefaultInvitation()
-}
-
 export function getDefaultThemeVisual(themeId: ThemeId): ThemeVisualStyle {
   const base = structuredClone(defaultData) as unknown as InvitationData
   return deepMergeThemeVisual(
@@ -423,10 +405,6 @@ export function patchActiveThemeVisual(
       [id]: deepMergeThemeVisual(current, partial),
     },
   }
-}
-
-export function getLegacyThemeStyle(data: InvitationData): ThemeStyle {
-  return toLegacyThemeStyle(getActiveVisual(data))
 }
 
 export type { ThemeId, ThemeVisualStyle } from './themeTypes'

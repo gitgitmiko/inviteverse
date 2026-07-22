@@ -708,8 +708,6 @@ export const DEFAULT_THEME_STYLES: Record<ThemeId, ThemeVisualStyle> = {
   ),
 }
 
-export { SECTION_IDS }
-
 function mergeTransform(
   base: SlotTransform,
   partial?: Partial<SlotTransform> | null,

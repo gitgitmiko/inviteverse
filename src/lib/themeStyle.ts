@@ -6,8 +6,6 @@ import {
 } from './themeDefaults'
 import { isThemeId } from './themeRegistry'
 import type {
-  SectionId,
-  SectionVisual,
   SlotBackground,
   SlotTransform,
   ThemeId,
@@ -39,16 +37,6 @@ export function getThemeVisual(
   return deepMergeThemeVisual(
     DEFAULT_THEME_STYLES[themeId],
     themeStyles?.[themeId],
-  )
-}
-
-export function getSectionVisual(
-  visual: ThemeVisualStyle,
-  sectionId: SectionId,
-): SectionVisual {
-  return (
-    visual.sections[sectionId] ??
-    DEFAULT_THEME_STYLES['super-classic'].sections[sectionId]
   )
 }
 

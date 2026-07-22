@@ -11,4 +11,3 @@
 | `frame-floral.png` | Frame | cover accent | FreeSVG PD |
 
 **Tidak memakai** aset `nikah/template/...` Indoinvite.
-File recolor seragam (`corner-taupe/red/blue/pink.svg`) diganti aset berbentuk berbeda di atas.

@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" fill="none">
-  <!-- Original Invite VERSE — Elegan-Grey horizontal flourish -->
-  <path d="M20 40 H120" stroke="#928573" stroke-width="1.2" opacity="0.55"/>
-  <path d="M200 40 H300" stroke="#928573" stroke-width="1.2" opacity="0.55"/>
-  <path d="M130 40c10-18 30-18 40 0-10 18-30 18-40 0z" fill="#9e9180" opacity="0.75"/>
-  <circle cx="160" cy="40" r="4" fill="#2d2d2d" opacity="0.35"/>
-  <path d="M110 40c6-10 14-10 20 0" stroke="#928573" stroke-width="1" fill="none" opacity="0.6"/>
-  <path d="M190 40c6 10 14 10 20 0" stroke="#928573" stroke-width="1" fill="none" opacity="0.6"/>
-</svg>

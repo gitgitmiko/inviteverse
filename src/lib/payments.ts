@@ -122,11 +122,3 @@ export async function activatePlanLocally(
     throw new Error('Gagal mengaktifkan paket (undangan tidak ditemukan / RLS).')
   }
 }
-
-/** @deprecated alias */
-export async function simulatePlanUpgrade(
-  invitationId: string,
-  planId: PlanId,
-): Promise<void> {
-  return activatePlanLocally(invitationId, planId)
-}
