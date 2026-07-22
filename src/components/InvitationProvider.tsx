@@ -37,6 +37,9 @@ type InvitationContextValue = {
   error: string | null
   plan: PlanDef
   benefits: PlanBenefits
+  /** Admin sedang bantu edit konten undangan user */
+  contentAssist: boolean
+  setContentAssist: (value: boolean) => void
   refreshList: () => Promise<void>
   selectInvitation: (id: string) => Promise<void>
   createNew: (themeId?: ThemeId) => Promise<InvitationRow>
@@ -61,6 +64,7 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [contentAssist, setContentAssist] = useState(false)
 
   const refreshList = useCallback(async () => {
     if (!user || !isSupabaseConfigured) {
@@ -149,12 +153,13 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
     setSaving(true)
     setError(null)
     try {
-      const row =
-        user?.role === 'admin'
-          ? await saveInvitationThemeRemote(activeId, data)
-          : await saveInvitationRemote(activeId, data, {
-              title: `${data.groomNickname} & ${data.brideNickname}`,
-            })
+      const saveFullContent =
+        user?.role !== 'admin' || contentAssist
+      const row = saveFullContent
+        ? await saveInvitationRemote(activeId, data, {
+            title: `${data.groomNickname} & ${data.brideNickname}`,
+          })
+        : await saveInvitationThemeRemote(activeId, data)
       setActiveRow(row)
       await refreshList()
     } catch (err) {
@@ -164,7 +169,7 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
     } finally {
       setSaving(false)
     }
-  }, [activeId, data, refreshList, user?.role])
+  }, [activeId, contentAssist, data, refreshList, user?.role])
 
   const publish = useCallback(async () => {
     if (user?.role === 'admin') {
@@ -255,6 +260,8 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
       error,
       plan,
       benefits,
+      contentAssist,
+      setContentAssist,
       refreshList,
       selectInvitation,
       createNew,
@@ -275,6 +282,7 @@ export function InvitationProvider({ children }: { children: ReactNode }) {
       error,
       plan,
       benefits,
+      contentAssist,
       refreshList,
       selectInvitation,
       createNew,

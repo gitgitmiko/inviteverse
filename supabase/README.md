@@ -18,6 +18,8 @@ Di Dashboard → **SQL Editor**, jalankan berurutan:
 4. `supabase/migrations/004_theme_publish_status.sql` (draft vs published)
 5. `supabase/migrations/005_plans_payments.sql` (paket + payments)
 6. `supabase/migrations/006_midtrans_payments.sql` (kolom Midtrans)
+7. `supabase/migrations/007_theme_templates_public_read.sql` (tamu boleh baca tema published)
+8. `supabase/migrations/008_assist_requests.sql` (antrian Dibuatin Admin)
 
 Lihat juga `supabase/MIDTRANS.md` untuk setup pembayaran.
 

@@ -43,28 +43,15 @@ export function normalizeInvitation(
     raw.themeStyles as Partial<Record<ThemeId, ThemeVisualStyle>> | undefined,
   )
 
-  const themeStyles: Record<ThemeId, ThemeVisualStyle> = {
-    'super-classic': deepMergeThemeVisual(
-      DEFAULT_THEME_STYLES['super-classic'],
-      deepMergeThemeVisual(
-        base.themeStyles['super-classic'] as ThemeVisualStyle,
-        migrated['super-classic'],
-      ),
-    ),
-    'elegan-grey': deepMergeThemeVisual(
-      DEFAULT_THEME_STYLES['elegan-grey'],
-      deepMergeThemeVisual(
-        base.themeStyles['elegan-grey'] as ThemeVisualStyle,
-        migrated['elegan-grey'],
-      ),
-    ),
-    'blue-flowers': deepMergeThemeVisual(
-      DEFAULT_THEME_STYLES['blue-flowers'],
-      deepMergeThemeVisual(
-        base.themeStyles['blue-flowers'] as ThemeVisualStyle,
-        migrated['blue-flowers'],
-      ),
-    ),
+  const themeStyles = {} as Record<ThemeId, ThemeVisualStyle>
+  for (const id of Object.keys(DEFAULT_THEME_STYLES) as ThemeId[]) {
+    const fromBase = base.themeStyles?.[id] as ThemeVisualStyle | undefined
+    themeStyles[id] = deepMergeThemeVisual(
+      DEFAULT_THEME_STYLES[id],
+      fromBase
+        ? deepMergeThemeVisual(fromBase, migrated[id])
+        : migrated[id],
+    )
   }
 
   return {

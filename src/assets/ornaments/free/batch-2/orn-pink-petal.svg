@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Original soft petal spray — Snow-Pink -->
+  <g fill="#F393B0">
+    <ellipse cx="40" cy="50" rx="28" ry="16" transform="rotate(-30 40 50)" opacity="0.95"/>
+    <ellipse cx="62" cy="38" rx="22" ry="13" transform="rotate(20 62 38)" opacity="0.9"/>
+    <ellipse cx="48" cy="68" rx="20" ry="12" transform="rotate(-5 48 68)" opacity="0.85"/>
+    <circle cx="52" cy="52" r="8" fill="#ffc0d0"/>
+    <ellipse cx="110" cy="36" rx="18" ry="10" transform="rotate(35 110 36)" opacity="0.9"/>
+    <ellipse cx="95" cy="55" rx="16" ry="9" transform="rotate(-15 95 55)" opacity="0.8"/>
+    <path d="M70 70 C90 110 100 140 108 175" stroke="#F393B0" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <ellipse cx="88" cy="120" rx="22" ry="11" transform="rotate(55 88 120)" opacity="0.85"/>
+    <ellipse cx="118" cy="105" rx="18" ry="10" transform="rotate(-40 118 105)" opacity="0.8"/>
+    <ellipse cx="30" cy="110" rx="14" ry="8" transform="rotate(60 30 110)" opacity="0.75"/>
+    <circle cx="140" cy="70" r="6" fill="#ffd0de"/>
+    <circle cx="24" cy="30" r="5" fill="#ffd0de"/>
+  </g>
+</svg>

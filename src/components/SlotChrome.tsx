@@ -35,7 +35,7 @@ export function FreeOrnamentItem({
       aria-hidden
     >
       <div className={`slot-chrome__orn-motion ${animClass}`}>
-        <SafeImage src={ornament.src} alt="" />
+        <SafeImage src={ornament.src} alt="" eager />
       </div>
     </div>
   )
@@ -126,6 +126,7 @@ export function PhotoFrameSlot({
           className="photo-frame-slot__overlay"
           src={frameSrc}
           alt=""
+          eager
           style={slotTransformStyle(frameTransform)}
         />
       ) : null}

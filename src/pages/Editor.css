@@ -26,6 +26,15 @@
   z-index: 20;
 }
 
+.ed__banner {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background: #f8e8e6;
+  color: #7a2e28;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
 .ed__link {
   color: var(--ed-gold);
   font-weight: 600;

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Original rose-cluster corner — Red-Essence -->
+  <g fill="#621B26">
+    <circle cx="48" cy="52" r="22"/>
+    <circle cx="48" cy="52" r="12" fill="#8a2f3c"/>
+    <circle cx="48" cy="52" r="5" fill="#c45c68"/>
+    <path d="M48 74c-2 28 6 52 18 72" stroke="#621B26" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <path d="M42 90c-22 8-36 4-48-8" stroke="#621B26" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <ellipse cx="22" cy="78" rx="18" ry="10" transform="rotate(-35 22 78)"/>
+    <ellipse cx="78" cy="70" rx="16" ry="9" transform="rotate(40 78 70)"/>
+    <circle cx="86" cy="28" r="14"/>
+    <circle cx="86" cy="28" r="7" fill="#8a2f3c"/>
+    <path d="M70 120c18-6 34-4 48 10" stroke="#621B26" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <ellipse cx="110" cy="118" rx="14" ry="8" transform="rotate(25 110 118)"/>
+    <circle cx="28" cy="120" r="10"/>
+    <path d="M20 40 C8 20 4 8 18 4" stroke="#621B26" stroke-width="3" fill="none"/>
+  </g>
+</svg>

@@ -17,6 +17,7 @@ export type RevealAnim =
   | 'zoom-in'
   | 'zoom-in-up'
   | 'zoom-in-down'
+  | 'zoom-out'
 
 type RevealRootCtx = RefObject<Element | null> | null
 const RevealRootContext = createContext<RevealRootCtx>(null)

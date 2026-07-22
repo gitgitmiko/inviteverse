@@ -1,0 +1,132 @@
+.phone-thumb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.phone-thumb__bezel {
+  position: relative;
+  width: 108px;
+  height: 198px;
+  padding: 7px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, #2a2a2a, #0e0e0e);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.phone-thumb__notch {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  z-index: 3;
+  width: 36px;
+  height: 5px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #111;
+}
+
+.phone-thumb__screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+}
+
+.phone-thumb__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.phone-thumb__orn {
+  position: absolute;
+  z-index: 2;
+  width: 70%;
+  opacity: 0.85;
+  pointer-events: none;
+  object-fit: contain;
+}
+
+.phone-thumb__orn--1 {
+  top: -4%;
+  left: -28%;
+}
+
+.phone-thumb__orn--2 {
+  top: -4%;
+  right: -28%;
+  transform: scaleX(-1);
+}
+
+.phone-thumb__content {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.35rem 0.4rem 0.55rem;
+  text-align: center;
+}
+
+.phone-thumb__screen--end .phone-thumb__content {
+  justify-content: flex-end;
+  padding-bottom: 0.7rem;
+}
+
+.phone-thumb__screen--center .phone-thumb__content {
+  justify-content: center;
+}
+
+.phone-thumb__eyebrow {
+  margin: 0;
+  font-size: 0.42rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.phone-thumb__names {
+  margin: 0.15rem 0 0.35rem;
+  font-size: 0.78rem;
+  line-height: 1.05;
+  font-weight: 400;
+}
+
+.phone-thumb__photo {
+  width: 38px;
+  height: 52px;
+  margin: 0.15rem 0 0.4rem;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(0, 0, 0, 0.15)),
+    #cfc6bb;
+  border: 1px solid;
+  outline: 1px solid;
+  outline-offset: 2px;
+}
+
+.phone-thumb__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.6rem;
+  padding: 0.18rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.38rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.phone-thumb__caption {
+  display: none;
+}

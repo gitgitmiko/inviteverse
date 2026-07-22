@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Original ice-crystal corner — Snow-Blue -->
+  <g stroke="#2c7fb5" stroke-width="3" stroke-linecap="round" fill="#2c7fb5">
+    <path d="M100 20 L100 180" stroke-width="2.5" fill="none"/>
+    <path d="M30 100 L170 100" stroke-width="2.5" fill="none"/>
+    <path d="M45 45 L155 155" stroke-width="2" fill="none"/>
+    <path d="M155 45 L45 155" stroke-width="2" fill="none"/>
+    <path d="M100 20 L88 42 M100 20 L112 42" fill="none"/>
+    <path d="M100 180 L88 158 M100 180 L112 158" fill="none"/>
+    <path d="M30 100 L52 88 M30 100 L52 112" fill="none"/>
+    <path d="M170 100 L148 88 M170 100 L148 112" fill="none"/>
+    <path d="M45 45 L62 52 M45 45 L52 62" fill="none"/>
+    <path d="M155 155 L138 148 M155 155 L148 138" fill="none"/>
+    <path d="M155 45 L138 52 M155 45 L148 62" fill="none"/>
+    <path d="M45 155 L62 148 M45 155 L52 138" fill="none"/>
+    <circle cx="100" cy="100" r="8" fill="#5a9fc8"/>
+    <circle cx="100" cy="100" r="3" fill="#fff"/>
+    <circle cx="100" cy="48" r="4"/>
+    <circle cx="100" cy="152" r="4"/>
+    <circle cx="52" cy="100" r="4"/>
+    <circle cx="148" cy="100" r="4"/>
+  </g>
+</svg>

@@ -65,6 +65,9 @@ export default function AdminThemesPage() {
             <Link to="/" className="inv__btn inv__btn--ghost">
               Beranda
             </Link>
+            <Link to="/admin/assist" className="inv__btn inv__btn--ghost">
+              Antrian bantuan
+            </Link>
             <Link to="/harga" className="inv__btn inv__btn--ghost">
               Harga
             </Link>

@@ -9,6 +9,7 @@ import {
   clearLegacyLocalInvitation,
   readLegacyLocalInvitation,
 } from '../lib/invitationStore'
+import { requestAdminAssist } from '../lib/requestAdminAssist'
 import { THEME_REGISTRY } from '../lib/themeRegistry'
 import type { ThemeId } from '../lib/themeTypes'
 import './Invitations.css'
@@ -41,6 +42,7 @@ export default function InvitationsPage() {
   const [themePick, setThemePick] = useState<ThemeId | ''>('')
   const [busyId, setBusyId] = useState<string | null>(null)
   const [msg, setMsg] = useState<string | null>(null)
+  const [assistBusy, setAssistBusy] = useState(false)
   const legacy = readLegacyLocalInvitation()
 
   const effectiveTheme =
@@ -139,6 +141,32 @@ export default function InvitationsPage() {
     }
   }
 
+  const onRequestAssist = async (themeOverride?: ThemeId) => {
+    const themeId =
+      themeOverride ??
+      (activeRow?.active_theme as ThemeId | undefined) ??
+      effectiveTheme
+    if (!themeId) {
+      setMsg('Belum ada tema siap pakai. Hubungi admin.')
+      return
+    }
+    setAssistBusy(true)
+    setMsg(null)
+    try {
+      const result = await requestAdminAssist({
+        themeId,
+        activeId,
+        createNew,
+        selectInvitation,
+      })
+      setMsg(result.message)
+    } catch (err) {
+      setMsg(err instanceof Error ? err.message : 'Gagal membuat permintaan')
+    } finally {
+      setAssistBusy(false)
+    }
+  }
+
   return (
     <div className="inv">
       <header className="inv__nav">
@@ -222,14 +250,26 @@ export default function InvitationsPage() {
                   ))}
                 </select>
               </label>
-              <button
-                type="button"
-                className="inv__btn inv__btn--solid"
-                disabled={creating || loading || !effectiveTheme}
-                onClick={() => void onCreate()}
-              >
-                {creating ? 'Membuat…' : 'Buat undangan'}
-              </button>
+              <div className="inv__row-actions">
+                <button
+                  type="button"
+                  className="inv__btn inv__btn--solid"
+                  disabled={creating || loading || !effectiveTheme}
+                  onClick={() => void onCreate()}
+                >
+                  {creating ? 'Membuat…' : 'Buat undangan'}
+                </button>
+                <button
+                  type="button"
+                  className="inv__btn inv__btn--ghost"
+                  disabled={
+                    assistBusy || creating || loading || !effectiveTheme
+                  }
+                  onClick={() => void onRequestAssist(effectiveTheme ?? undefined)}
+                >
+                  {assistBusy ? 'Mengirim…' : 'Dibuatin Admin'}
+                </button>
+              </div>
             </>
           )}
         </section>
@@ -254,6 +294,16 @@ export default function InvitationsPage() {
               <Link to="/edit" className="inv__btn inv__btn--solid">
                 Edit konten
               </Link>
+              <button
+                type="button"
+                className="inv__btn inv__btn--ghost"
+                disabled={assistBusy}
+                onClick={() =>
+                  void onRequestAssist(activeRow.active_theme as ThemeId)
+                }
+              >
+                {assistBusy ? 'Mengirim…' : 'Dibuatin Admin'}
+              </button>
               <Link to="/harga" className="inv__btn inv__btn--ghost">
                 Upgrade paket
               </Link>

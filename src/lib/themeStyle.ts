@@ -117,19 +117,9 @@ export function migrateLegacyThemeStyle(
   legacy: LegacyThemeStyle | undefined,
   existing?: Partial<Record<ThemeId, ThemeVisualStyle>>,
 ): Record<ThemeId, ThemeVisualStyle> {
-  const map: Record<ThemeId, ThemeVisualStyle> = {
-    'super-classic': deepMergeThemeVisual(
-      DEFAULT_THEME_STYLES['super-classic'],
-      existing?.['super-classic'],
-    ),
-    'elegan-grey': deepMergeThemeVisual(
-      DEFAULT_THEME_STYLES['elegan-grey'],
-      existing?.['elegan-grey'],
-    ),
-    'blue-flowers': deepMergeThemeVisual(
-      DEFAULT_THEME_STYLES['blue-flowers'],
-      existing?.['blue-flowers'],
-    ),
+  const map = {} as Record<ThemeId, ThemeVisualStyle>
+  for (const id of Object.keys(DEFAULT_THEME_STYLES) as ThemeId[]) {
+    map[id] = deepMergeThemeVisual(DEFAULT_THEME_STYLES[id], existing?.[id])
   }
 
   if (!legacy) return map

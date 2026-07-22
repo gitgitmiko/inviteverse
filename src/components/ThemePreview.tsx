@@ -1,6 +1,8 @@
 import VersionA from '../themes/super-classic-a/VersionA'
 import EleganGrey from '../themes/elegan-grey/EleganGrey'
 import BlueFlowers from '../themes/blue-flowers/BlueFlowers'
+import NatureFamily from '../themes/nature-family/NatureFamily'
+import { isNatureThemeId } from '../themes/nature-family/natureSkins'
 import type { InvitationData } from '../lib/invitationStore'
 import type { ThemeId } from '../lib/themeTypes'
 import type { PreviewFocusTarget } from './useScrollPreviewToSection'
@@ -34,5 +36,8 @@ export default function ThemePreview({
 
   if (theme === 'elegan-grey') return <EleganGrey {...common} />
   if (theme === 'blue-flowers') return <BlueFlowers {...common} />
+  if (isNatureThemeId(theme)) {
+    return <NatureFamily themeId={theme} {...common} />
+  }
   return <VersionA {...common} />
 }

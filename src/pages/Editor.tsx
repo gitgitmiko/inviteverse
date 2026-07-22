@@ -61,7 +61,13 @@ const PANEL_FOCUS: Record<PanelId, PreviewFocusTarget | null> = {
   hadiah: 'gift',
 }
 
-export default function Editor() {
+export default function Editor({
+  assistMode = false,
+  assistRequestId = null,
+}: {
+  assistMode?: boolean
+  assistRequestId?: string | null
+} = {}) {
   const user = useAuth()
   const {
     data,
@@ -83,11 +89,15 @@ export default function Editor() {
   const [saveError, setSaveError] = useState<string | null>(null)
   const [showCover, setShowCover] = useState(false)
   const [focusNonce, setFocusNonce] = useState(0)
+  const [assistMsg, setAssistMsg] = useState<string | null>(null)
+  const [assistBusy, setAssistBusy] = useState(false)
   const previewRef = useRef<HTMLDivElement | null>(null)
 
   const focusSection = PANEL_FOCUS[panel]
   const previewForceOpen =
     panel === 'menu' ? !showCover : focusSection !== 'cover'
+  const backTo = assistMode ? '/admin/assist' : '/invitations'
+  const backLabel = assistMode ? '← Antrian bantuan' : '← Undanganku'
 
   const openPanel = (id: PanelId) => {
     setPanel(id)
@@ -170,29 +180,52 @@ export default function Editor() {
   }
 
   if (!activeId) {
-    return <Navigate to="/invitations" replace />
+    return <Navigate to={backTo} replace />
+  }
+
+  const markAssistDone = async () => {
+    if (!assistRequestId) return
+    setAssistBusy(true)
+    setAssistMsg(null)
+    try {
+      await save()
+      const { updateAssistStatus } = await import('../lib/assistRequests')
+      await updateAssistStatus(assistRequestId, 'done')
+      setAssistMsg('Konten disimpan & permintaan ditandai selesai.')
+    } catch (err) {
+      setAssistMsg(err instanceof Error ? err.message : 'Gagal menyelesaikan')
+    } finally {
+      setAssistBusy(false)
+    }
   }
 
   return (
     <div className="ed">
       <header className="ed__top">
-        <Link to="/invitations" className="ed__link">
-          ← Undanganku
+        <Link to={backTo} className="ed__link">
+          {backLabel}
         </Link>
         <div className="ed__top-title">
-          <strong>Editor · Konten</strong>
+          <strong>
+            {assistMode ? 'Editor · Bantuan admin' : 'Editor · Konten'}
+          </strong>
           <span>
-            Paket {plan.name} · tema{' '}
-            {THEME_REGISTRY[data.activeTheme]?.label ?? data.activeTheme}
+            {assistMode
+              ? `Tema ${THEME_REGISTRY[data.activeTheme]?.label ?? data.activeTheme}`
+              : `Paket ${plan.name} · tema ${
+                  THEME_REGISTRY[data.activeTheme]?.label ?? data.activeTheme
+                }`}
             {activeRow?.status === 'published' ? ' · published' : ' · draft'}
           </span>
         </div>
         <div className="ed__top-actions">
-          <Link to="/harga" className="ed__ghost">
-            Upgrade
-          </Link>
-          <Link to="/invitations" className="ed__ghost">
-            Undanganku
+          {!assistMode && (
+            <Link to="/harga" className="ed__ghost">
+              Upgrade
+            </Link>
+          )}
+          <Link to={backTo} className="ed__ghost">
+            {assistMode ? 'Antrian' : 'Undanganku'}
           </Link>
           <button
             type="button"
@@ -211,6 +244,16 @@ export default function Editor() {
             Reset konten
           </button>
           {user && <AppAccount user={user} tone="dark" />}
+          {assistMode && assistRequestId && (
+            <button
+              type="button"
+              className="ed__ghost"
+              disabled={assistBusy || saving}
+              onClick={() => void markAssistDone()}
+            >
+              {assistBusy ? '…' : 'Selesai'}
+            </button>
+          )}
           <button
             type="button"
             className="ed__save"
@@ -221,17 +264,16 @@ export default function Editor() {
           </button>
         </div>
       </header>
-      {(saveError || invError) && (
+      {(saveError || invError || assistMsg) && (
         <p
-          style={{
-            margin: 0,
-            padding: '0.5rem 1rem',
-            background: '#f8e8e6',
-            color: '#7a2e28',
-            fontSize: '0.85rem',
-          }}
+          className="ed__banner"
+          style={
+            assistMsg && !saveError && !invError
+              ? { background: 'rgba(47, 93, 74, 0.12)' }
+              : undefined
+          }
         >
-          {saveError || invError}
+          {saveError || invError || assistMsg}
         </p>
       )}
 
@@ -862,7 +904,7 @@ export default function Editor() {
         <button type="button" onClick={() => openPanel('setting')}>
           Pengaturan
         </button>
-        <Link to="/invitations">Undanganku</Link>
+        <Link to={backTo}>{assistMode ? 'Antrian' : 'Undanganku'}</Link>
         <Link
           to={
             activeRow?.status === 'published'

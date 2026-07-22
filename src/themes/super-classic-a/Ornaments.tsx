@@ -1,9 +1,15 @@
+import type { CSSProperties } from 'react'
 import type { ThemeStyle } from '../../lib/invitationStore'
 import SafeImage from '../../components/SafeImage'
 
 type OrnamentKey = keyof ThemeStyle['ornaments']
 
-const SVG_CORNERS: { key: OrnamentKey; className: string; path: string }[] = [
+const SVG_CORNERS: {
+  key: OrnamentKey
+  className: string
+  path: string
+  imgStyle?: CSSProperties
+}[] = [
   {
     key: 'topLeft',
     className: 'ornament ornament--tl goyang-1',
@@ -13,16 +19,19 @@ const SVG_CORNERS: { key: OrnamentKey; className: string; path: string }[] = [
     key: 'topRight',
     className: 'ornament ornament--tr goyang-12',
     path: 'M110 20 C90 10, 70 8, 50 18 C65 25, 80 35, 92 55 C98 40, 104 30, 110 20 Z M100 70 C85 55, 65 45, 40 42 C60 58, 75 75, 82 100 C90 85, 96 78, 100 70 Z',
+    imgStyle: { transform: 'scaleX(-1)' },
   },
   {
     key: 'bottomLeft',
     className: 'ornament ornament--bl goyang-1',
     path: 'M10 100 C30 110, 50 112, 70 102 C55 95, 40 85, 28 65 C22 80, 16 90, 10 100 Z M20 50 C35 65, 55 75, 80 78 C60 62, 45 45, 38 20 C30 35, 24 42, 20 50 Z',
+    imgStyle: { transform: 'scaleY(-1)' },
   },
   {
     key: 'bottomRight',
     className: 'ornament ornament--br goyang-12',
     path: 'M110 100 C90 110, 70 112, 50 102 C65 95, 80 85, 92 65 C98 80, 104 90, 110 100 Z M100 50 C85 65, 65 75, 40 78 C60 62, 75 45, 82 20 C90 35, 96 42, 100 50 Z',
+    imgStyle: { transform: 'scale(-1)' },
   },
 ]
 
@@ -35,16 +44,19 @@ export function CornerOrnaments({ themeStyle }: Props) {
   if (mode === 'image') {
     return (
       <>
-        {SVG_CORNERS.map(({ key, className }) => {
+        {SVG_CORNERS.map(({ key, className, imgStyle }) => {
           const src = images?.[key]
           if (!src) return null
           return (
-            <SafeImage
-              key={key}
-              className={`${className} ornament--img`}
-              src={src}
-              alt=""
-            />
+            <span key={key} className={className}>
+              <SafeImage
+                className="ornament--img"
+                style={{ width: '100%', height: '100%', ...imgStyle }}
+                src={src}
+                alt=""
+                eager
+              />
+            </span>
           )
         })}
       </>

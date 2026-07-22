@@ -28,6 +28,9 @@
 .reveal--zoom-in-down {
   transform: translate3d(0, -28px, 0) scale(0.92);
 }
+.reveal--zoom-out {
+  transform: scale(1.12);
+}
 
 .reveal.is-in {
   opacity: 1;

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  <!-- Original Invite VERSE — Blue-Flowers circular photo ring -->
+  <circle cx="120" cy="120" r="104" stroke="#005189" stroke-width="3" opacity="0.35"/>
+  <circle cx="120" cy="120" r="96" stroke="#359bb7" stroke-width="2" opacity="0.45"/>
+  <g>
+    <path d="M120 10c10 14 8 28-2 40-10-12-12-26-2-40z" fill="#005189"/>
+    <path d="M120 190c10 14 8 28-2 40-10-12-12-26-2-40z" fill="#005189"/>
+    <path d="M10 120c14-10 28-8 40 2-12 10-26 12-40-2z" fill="#2276b1"/>
+    <path d="M190 120c14-10 28-8 40 2-12 10-26 12-40-2z" fill="#2276b1"/>
+    <path d="M42 42c12-6 24-2 32 8-10 8-22 10-34 4-2-4 0-8 2-12z" fill="#359bb7"/>
+    <path d="M198 42c-12-6-24-2-32 8 10 8 22 10 34 4 2-4 0-8-2-12z" fill="#359bb7"/>
+    <path d="M42 198c12 6 24 2 32-8-10-8-22-10-34-4-2 4 0 8 2 12z" fill="#359bb7"/>
+    <path d="M198 198c-12 6-24 2-32-8 10-8 22-10 34-4 2 4 0 8 2 12z" fill="#359bb7"/>
+  </g>
+  <circle cx="120" cy="28" r="5" fill="#94deff"/>
+  <circle cx="120" cy="212" r="5" fill="#94deff"/>
+  <circle cx="28" cy="120" r="5" fill="#ffffff" opacity="0.85"/>
+  <circle cx="212" cy="120" r="5" fill="#ffffff" opacity="0.85"/>
+</svg>

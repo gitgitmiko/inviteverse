@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Original taupe leaf scroll accent — Classic-Devotion side -->
+  <g fill="#A49178" stroke="#A49178">
+    <path d="M20 30 C60 20 90 40 100 80 C70 70 40 75 20 100 Z" opacity="0.9"/>
+    <path d="M100 80 C130 50 160 45 185 55 C150 70 130 95 120 130 Z" opacity="0.85"/>
+    <path d="M40 120 C70 110 95 125 110 160 C80 145 55 150 35 170 Z" opacity="0.8"/>
+    <path d="M100 80 C105 120 115 150 130 180" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="100" cy="80" r="6" fill="#c4b49a"/>
+    <path d="M55 55 C68 48 78 55 82 68" stroke-width="2" fill="none"/>
+    <path d="M140 70 C152 62 162 70 165 82" stroke-width="2" fill="none"/>
+  </g>
+</svg>

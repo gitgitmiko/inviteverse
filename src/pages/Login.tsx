@@ -22,7 +22,10 @@ export default function LoginPage() {
         ? from.startsWith('/admin') || from.startsWith('/themes')
           ? from
           : '/themes'
-        : from.startsWith('/edit') || from.startsWith('/invitations')
+        : from.startsWith('/edit') ||
+            from.startsWith('/invitations') ||
+            from.startsWith('/?') ||
+            from === '/'
           ? from
           : '/invitations'
     return <Navigate to={dest} replace />
@@ -43,7 +46,9 @@ export default function LoginPage() {
       from.startsWith('/edit') ||
       from.startsWith('/admin') ||
       from.startsWith('/themes') ||
-      from.startsWith('/invitations')
+      from.startsWith('/invitations') ||
+      from.startsWith('/?') ||
+      from === '/'
         ? from
         : role === 'admin'
           ? '/themes'

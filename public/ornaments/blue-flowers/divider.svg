@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- Original Invite VERSE — Blue-Flowers event divider icon -->
+  <path d="M40 8c8 12 6 24-2 34-8-10-10-22-2-34z" fill="#005189"/>
+  <path d="M22 28c10 4 18 14 20 26-12-4-22-12-26-24 2-2 4-2 6-2z" fill="#2276b1"/>
+  <path d="M58 28c-10 4-18 14-20 26 12-4 22-12 26-24-2-2-4-2-6-2z" fill="#2276b1"/>
+  <circle cx="40" cy="42" r="6" fill="#94deff"/>
+  <circle cx="40" cy="42" r="2.5" fill="#005189"/>
+</svg>
